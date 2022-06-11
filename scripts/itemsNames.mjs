@@ -1,6 +1,6 @@
 /**
  * @file itemNames.mjs
- * @authors Nemanja Gajicic, Pietro Milanese, Jacopo Trompeo, Davide Murroni
+ * @authors Davide Murroni, Simone Sporeni, Paolo Gippa, Cristiano Francesco Finotto
  * File containing an array of all possible item names.
  *
  * This array of item names can be imported in any file and should be used

@@ -1,6 +1,6 @@
 /**
  * @file config.mjs
- * @authors Nemanja Gajicic, Pietro Milanese, Jacopo Trompeo, Davide Murroni
+ * @authors Davide Murroni, Simone Sporeni, Paolo Gippa, Cristiano Francesco Finotto
  * File containing an array of all possible item names.
  *
  * This array of item names can be imported in any file and should be used
@@ -35,24 +35,10 @@ export let config = {
 	startingOffset: 3,
 	shelfLife: 2,
 	newItemsPerWeek: 5,
-	weeksRuntime: 4,
+	weeksRuntime: 2,
 	intervalSeconds: 1,
 	zeroPaddedDigits: 3,
 	paddingCharacter: "*",
 	paddedNameChars: 17,
 	paddedStateChars: 11,
-	//BONUS 1 make R a random number between MIN and MAX
-	minIntervalSec: 1,
-	maxIntervalSec: 5,
-	//BONUS 2 Use colours in the console log output
-	newColor: "PaleGreen",
-	validColor: "LightSkyBlue",
-	oldColor: "Moccasin",
-	expiredColor: "LightPink",
-	fallbackColor: "LightSlateGrey",
-	//BONUS 3 Accept a user defined date formant in the config object
-	locale: "en",
-	dayFormat: "2-digit",
-	monthFormat: "short",
-	yearFormat: "numeric",
 };

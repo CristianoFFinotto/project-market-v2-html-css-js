@@ -1,6 +1,6 @@
 /**
  * @file functions.mjs
- * @authors Nemanja Gajicic, Pietro Milanese, Jacopo Trompeo, Davide Murroni
+ * @authors Davide Murroni, Simone Sporeni, Paolo Gippa, Cristiano Francesco Finotto
  * File with our main utility functions.
  *
  * This file is used to:
@@ -117,47 +117,13 @@ export let updateChecks = item => {
 //#region VARIABLE FORMATTING
 
 /**
- * Formats any date into a user defined format (eg. 02-APR-2022)
- * @param {Date} date - the date object to format
- * @param {object} cnf - the config object containing the properties used to format the date
- * @param {string} cnf.dayFormat - used to format the day ("2-digit", "numeric")
- * @param {string} cnf.monthFormat - used to format the month ("long" "narrow" "numeric" "short")
- * @param {string} cnf.yearFormat - used to format the year ("2-digit", "numeric")
- * @param {string} cnf.locale - the locale used for the date: https://www.venea.net/web/culture_code
- * @returns {string} the string representation of the formatted date
- */
-export let formatDate = (date, cnf) => {
-	let day = date.toLocaleDateString(cnf.locale, { day: cnf.dayFormat });
-	let month = date.toLocaleDateString(cnf.locale, { month: cnf.monthFormat });
-	let year = date.toLocaleDateString(cnf.locale, { year: cnf.yearFormat });
-
-	let formattedDate = `${day}-${month.toUpperCase()}-${year}`;
-
-	return formattedDate;
-};
-
-/**
  * Returns a 0 padded number. The length of the number is configurable
  * @param {number} num - the number to be 0 padded
  * @param {number} [length=3] - length of the final 0 padded number, equals to the number of digits + zero padding
  * @return {string} the final 0 padded number
  */
+
 let padNumber = (num, length = 3) => num.toString().padStart(length, "0");
-
-/**
- * Adds any amount of padding to the start and the end of a string
- * @param {string} str - the string to pad
- * @param {number} length - the final length to reach with the added padding
- * @param {string} [char="*"] - the character to use for padding
- * @returns {string} the string with the addedd padding at the start and the end
- */
-let padString = (str, length, char = "*") => {
-	str = str.replace(/\s/g, char);
-
-	let padLength = length - str.length;
-	let padLeft = Math.ceil(padLength / 2) + str.length;
-	return str.padStart(padLeft, char).padEnd(length, char);
-};
 
 //#endregion
 
@@ -200,6 +166,7 @@ let styleOutput = (state, cnf) => {
  * @param {number} cnf.paddedStateChars - the final length to reach with the added padding to item.state
  */
 export let printItems = (items, cnf) => {
+	
 	for (let item of items) {
 		let id = padNumber(item.id, cnf.zeroPaddedDigits);
 		let name = padString(item.name, cnf.paddedNameChars, cnf.paddingCharacter);
@@ -210,7 +177,7 @@ export let printItems = (items, cnf) => {
 		let style = styleOutput(item.state, cnf);
 		let output = `${id}: ${name} ${expiry} ${state} [${checks}]`;
 
-		console.log("%c" + output, style);
+		/* console.log("%c" + output, style); */
 	}
 };
 
