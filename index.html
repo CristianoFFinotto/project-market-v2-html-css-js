@@ -1,30 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="HTML of our Javascript Project" />
+    <meta name="author" content="Cristiano Finotto" />
+    <meta name="author" content="Paolo Gippa" />
+    <meta name="author" content="Davide Murroni" />
+    <meta name="author" content="Simone Sporeni" />
+    <title>Market Project</title>
+    <link rel="stylesheet" href="./styles/reset.css" />
+    <link rel="stylesheet" href="./styles/style.css" />
+  </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="HTML of our Javascript Project">
-    <meta name="author" content="Nemanja Gajicic, Pietro Milanse, Davide Murroni, Jacopo Trompeo">
-    <title>Expiry List</title>
-    <link rel="stylesheet" href="./styles/styles.css">
-</head>
-
-<body>
-
-    <div>
-        <h1>Expiry List</h1>
-        <h2>A filtered Item List</h2>
-        <button id="start">Start</button>
-    </div>
-
-    <div>
-        <p>To get started, open the console and press <span>start</span></p>
-        <p><span>Authors</span>: Nemanja Gajicic, Pietro Milanese, Jacopo Trompeo, Davide Murroni</p>
-    </div>
-
+  <body>
+    <header>
+      <h1>Market Inventory System</h1>
+    </header>
+    <main>
+      <form action="./index.html">
+        <div class="container">
+          <div class="form-container">
+            <label for="start-date">Start Date</label><br />
+            <input type="date" id="start-date" name="start-date" />
+          </div>
+          <div class="form-container">
+            <label for="weeks" class="">Number of Weeks</label>
+            <input type="number" id="weeks" name="weeks" pattern="[0-9]" maxlength="2">
+          </div>
+          <div class="form-container">
+            <label for="weekly-products" class="">Weekly products</label>
+            <input
+              type="number"
+              id="weekly-products"
+              name="weekly-products"
+              pattern="[0-9]"
+              maxlength="2"
+              required
+            />
+          </div>
+          <div class="form-container">
+            <label for="days-in-week">Week Duration</label>
+            <input
+              type="number"
+              id="days-in-week"
+              name="days-in-week"
+              pattern="[0-9]"
+              maxlength="2"
+              required
+            />
+          </div>
+          <div class="form-container">
+            <label for="check-threshold">Check Threshold</label>
+            <input
+              type="number"
+              id="check-threshold"
+              pattern="[0-9]"
+              maxlength="2"
+              required
+            />
+          </div>
+          <div class="form-container">
+            <label for="date-offset">Date Offset</label>
+            <input
+              type="number"
+              id="date-offset"
+              name="date-offset"
+              pattern="[0-9]"
+              maxlength="2"
+              required
+            />
+            <input type="submit" id="save" name="save" value="Save" />
+          </div>
+          </div>
+      </form>
+    </main>
     <script type="module" src="./scripts/main.mjs"></script>
-</body>
-
+  </body>
 </html>
