@@ -11,9 +11,16 @@ import { config as cnf } from "./config.mjs"; //configuration object
 import * as fn from "./functions.mjs"; //main functions used to run the program
 import { itemNames } from "./itemsNames.mjs"; //array with a list of all possible item names
 
+let runtime = cnf.weeksRuntime;
+let items = [];
+let OldExpiryItems = [];
+//startDate and endDate define the range of the generated items' expiry dates
+let startDate = new Date();
+let endDate = fn.addDays(startDate, runtime * cnf.daysInWeek);
+
+let currentDate = fn.addDays(startDate, cnf.startingOffset);
+
 let init = () => {
-	
-	let runtime = cnf.weeksRuntime;
 
 	/* dare un messaggio sul DOM di errore */
 
@@ -22,16 +29,6 @@ let init = () => {
 		return;
 	}
 
-	//startDate and endDate define the range of the generated items' expiry dates
-
-	let startDate = new Date();
-	let endDate = fn.addDays(startDate, runtime * cnf.daysInWeek);
-
-	let currentDate = fn.addDays(startDate, cnf.startingOffset);
-
-	let items = [];
-
-	let id = setInterval(() => {
 
 		let startConfig = {
 			itemNames,
@@ -60,7 +57,7 @@ let init = () => {
 			console.log(""); 
 		*/
 
-		// 4) Add days to the current date
+	/* 	// 4) Add days to the current date
 		currentDate = fn.addDays(currentDate, cnf.daysInWeek);
 
 		// 5) Update the items (state and checks)
@@ -74,6 +71,87 @@ let init = () => {
 		if (runtime <= 0) {
 			clearInterval(id);
 			isRunning = false;
-		}
-	}, interval * 1000);
-};
+		} */
+	};
+
+function printContent(itemArray, currentDate) {
+	let nodeContent = document.getElementById("content");
+    /* Delete al node in section content */
+	while (nodeContent.hasChildNodes()) {
+		nodeContent.removeChild(nodeContent.firstChild);
+	  }
+
+	/* Create title with current date */
+	let title = document.createElement("h2");
+	title.textContent = `Date: ${currentDate}`;
+	nodeContent.appendChild(title);
+
+	createTable(itemArray);
+    /* Table FIltered */
+	let filtered = document.createElement("h2");
+	filtered.textContent = "Filtered";
+
+	createTable(itemArray.filter(fn.checkItem));
+	/* Add Buttons */
+}
+
+function createTable(itemArray) {
+		/* create table with items */
+		let table = document.createElement("table");
+		let thead = document.createElement("thead");
+		let tbody = document.createElement("tbody");
+		let tableRowThead = document.createElement("tr");
+		
+		let thId = document.createElement("th");
+		thId.textContent = "Id";
+		tableRowThead.appendChild(thId);
+	
+		let thName = document.createElement("th");
+		thId.textContent = "Name";
+		tableRowThead.appendChild(thName);
+	
+		let thExpiry = document.createElement("th");
+		thId.textContent = "Expiry Date";
+		tableRowThead.appendChild(thExpiry);
+	
+		let thChecks = document.createElement("th");
+		thId.textContent = "Checks";
+		tableRowThead.appendChild(thChecks);
+	
+		let thState = document.createElement("th");
+		thId.textContent = "State";
+		tableRowThead.appendChild(thState);
+	
+		thead.appendChild(tableRowThead);
+		table.appendChild(thead);
+	
+		itemArray.forEach(e => {
+			let tableRowItem = document.createElement("tr");
+	
+			let thIdElement = document.createElement("th");
+			thIdElement.textContent = e.id;
+			tableRowItem.appendChild(thIdElement);
+	
+			let thNameElement = document.createElement("th");
+			thNameElement.textContent = e.name;
+			tableRowItem.appendChild(thNameElement);
+	
+			let thExpiryEement = document.createElement("th");
+			thExpiryEement.textContent = e.expiry;
+			tableRowItem.appendChild(thExpiryEement);
+	
+			let thChecksEement = document.createElement("th");
+			thChecksEement.textContent = e.checks;
+			tableRowItem.appendChild(thChecksEement);
+	
+			let thStateEement = document.createElement("th");
+			thStateEement.textContent = e.state;
+			tableRowItem.appendChild(thStateEement);
+	
+			tbody.appendChild(tableRowItem);
+		})
+	
+		table.appendChild(tbody);
+		nodeContent.appendChild(table);
+	
+}
