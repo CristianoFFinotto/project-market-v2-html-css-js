@@ -17,13 +17,14 @@
   <body>
     <header>
       <h1>Market Inventory System</h1>
-      <h2>Your Inventory System Solution</h2>
-    </header>
+<!--       <h2>Your Inventory System Solution</h2>
+ -->    </header>
     <main>
       <div class="button-container">
         <button name="setting-btn" id="setting-btn" class="setting-btn">
-          Setting
+          ⚙️ 
         </button>
+        <i class="fa-solid fa-user-gear"></i>
       </div>
 
       <form action="./index.html">
@@ -31,7 +32,7 @@
           <h2 class="form-heading">Set Your Preferences</h2>
           <div class="form-container">
             <label for="start-date">Start Date</label><br />
-            <input type="date" id="start-date" name="start-date" />
+            <input type="date" id="start-date" name="start-date" placeholder="DD/MM/YYYY"/>
           </div>
           <div class="form-container">
             <label for="weeks" class="">Number of Weeks</label>
@@ -41,6 +42,7 @@
               name="weeks"
               pattern="[0-9]"
               maxlength="2"
+              
             />
           </div>
           <div class="form-container">
