@@ -66,7 +66,7 @@
  
 	 /* Create title with current date */
 	 let title = document.createElement("h2");
-	 title.textContent = `Date: ${currentDate}`;
+	 title.textContent = `Date: ${currentDate.toLocaleDateString(cnf.locale, { day: cnf.dayFormat}, {month: cnf.monthFormat })}`;
 	 sectionContent.appendChild(title);
  
 	 createTable(itemArray, sectionContent);
