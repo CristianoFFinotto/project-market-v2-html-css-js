@@ -142,6 +142,7 @@
 			 let thIdElement = document.createElement("th");
 			 thIdElement.textContent = e.id;
 			 tableRowItem.appendChild(thIdElement);
+			
 	 
 			 let thNameElement = document.createElement("th");
 			 thNameElement.textContent = e.name;
@@ -158,6 +159,24 @@
 			 let thStateEement = document.createElement("th");
 			 thStateEement.textContent = e.state;
 			 tableRowItem.appendChild(thStateEement);
+
+			 
+			switch(e.state) {
+				case "New":
+					thStateEement.style.backgroundColor = "green";
+					case "Valid":
+						thStateEement.style.backgroundColor = "yellow";
+						break;
+					case "Old":
+						thStateEement.style.backgroundColor = "orange";
+						break;
+					case "Expired":
+						thStateEement.style.backgroundColor = "red";
+						break;
+						default: 
+						thStateEement.style.backgroundColor = "transparent";
+			 }
+
 	 
 			 tbody.appendChild(tableRowItem);
 		 })

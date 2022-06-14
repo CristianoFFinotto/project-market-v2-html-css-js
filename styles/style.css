@@ -96,7 +96,8 @@ button.setting-btn:active {
   left: 46.5%;
   width: 7%;
   height: 9%;
-  font-size: 18px;
+  font-size: 22px;
+  font-weight: 600;
   padding: 13px 5px;
   visibility: visible;
   border-radius: 25%;

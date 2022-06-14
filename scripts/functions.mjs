@@ -86,7 +86,7 @@ export let generateItems = (numberOfItems, startConfig) => {
  */
 export let updateState = (item, currentDate, shelfLife) => {
 	if (item.checks === 0 && item.expiry > currentDate) {
-		item.state = "New";
+		item.state = "New"; 
 		return;
 	}
 
