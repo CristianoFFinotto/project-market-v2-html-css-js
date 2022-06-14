@@ -9,10 +9,11 @@
  * - print the items to the console
  * - manipulate certain useful variables (increment a date, pad a string, pad a number)
  */
-
+ import { config as cnf } from "./config.mjs";
 //#region ITEM GENERATION
 
 let id = 1;
+
 
 /**
  * Returns a global id variable and increments it by 1
@@ -128,60 +129,71 @@ let padNumber = (num, length = 3) => num.toString().padStart(length, "0");
 //#endregion
 
 //#region OUTPUT
-
 /**
- * Returns a string used to style the output in the console based on the item state
- * @param {string} state - the state of an item
- * @param {object} cnf - the config object containing the properties used to style the output
- * @param {string} cnf.newColor - the color to be used if the item state is equal to "New"
- * @param {string} cnf.validColor - the color to be used if the item state is equal to "Valid"
- * @param {string} cnf.oldColor - the color to be used if the item state is equal to "Old"
- * @param {string} cnf.expiredColor - the color to be used if the item state is equal to "Expired"
- * @param {string} cnf.fallbackColor - the color to be used if the item has no state
- * @returns {string} the string containing the css style to output in the console
+ * 
+ * @param {*} itemArray 
+ * @param {*} node 
  */
-let styleOutput = (state, cnf) => {
-	if (state === "New") {
-		return `font-weight: bold; background-color: ${cnf.newColor};`;
-	}
-	if (state === "Valid") {
-		return `font-weight: bold; background-color: ${cnf.validColor};`;
-	}
-	if (state === "Old") {
-		return `font-weight: bold; background-color: ${cnf.oldColor};`;
-	}
-	if (state === "Expired") {
-		return `font-weight: bold; background-color: ${cnf.expiredColor};`;
-	}
-	return `font-weight: bold; background-color: ${cnf.fallbackColor};`;
-};
-
-/**
- * Logs to the console a string such as : "00item.id: ****item.name**** item.expiry *******item.state******* [item.checks]"
- * @param {object} items - an array with item objects
- * @param {object} cnf - the config object containing the properties used to print to the console
- * @param {number} cnf.zeroPaddedDigits - the final lenght to reach with the added 0 padding to a number
- * @param {string} cnf.paddingCharacter - the character used to pad a string
- * @param {number} cnf.paddedNameChars - the final length to reach with the added padding to item.name
- * @param {number} cnf.paddedStateChars - the final length to reach with the added padding to item.state
- */
-export let printItems = (items, cnf) => {
+let createTable = (itemArray, node) => {
+	/* create table with items */
+	let table = document.createElement("table");
+	let thead = document.createElement("thead");
+	let tbody = document.createElement("tbody");
+	let tableRowThead = document.createElement("tr");
 	
-	for (let item of items) {
-		let id = padNumber(item.id, cnf.zeroPaddedDigits);
-		let name = padString(item.name, cnf.paddedNameChars, cnf.paddingCharacter);
-		let expiry = formatDate(item.expiry, cnf);
-		let state = padString(item.state, cnf.paddedStateChars, cnf.paddingCharacter);
-		let checks = `${item.checks}${item.checks === 1 ? " check " : " checks"}`;
+	let thId = document.createElement("th");
+	thId.textContent = "Id";
+	tableRowThead.appendChild(thId);
 
-		let style = styleOutput(item.state, cnf);
-		let output = `${id}: ${name} ${expiry} ${state} [${checks}]`;
+	let thName = document.createElement("th");
+	thName.textContent = "Name";
+	tableRowThead.appendChild(thName);
 
-		/* console.log("%c" + output, style); */
-	}
-};
+	let thExpiry = document.createElement("th");
+	thExpiry.textContent = "Expiry Date";
+	tableRowThead.appendChild(thExpiry);
 
-//#endregion
+	let thChecks = document.createElement("th");
+	thChecks.textContent = "Checks";
+	tableRowThead.appendChild(thChecks);
+
+	let thState = document.createElement("th");
+	thState.textContent = "State";
+	tableRowThead.appendChild(thState);
+
+	thead.appendChild(tableRowThead);
+	table.appendChild(thead);
+
+	itemArray.forEach(e => {
+		let tableRowItem = document.createElement("tr");
+
+		let thIdElement = document.createElement("th");
+		thIdElement.textContent = e.id;
+		tableRowItem.appendChild(thIdElement);
+
+		let thNameElement = document.createElement("th");
+		thNameElement.textContent = e.name;
+		tableRowItem.appendChild(thNameElement);
+
+		let thExpiryEement = document.createElement("th");
+		thExpiryEement.textContent = e.expiry.toLocaleDateString(cnf.locale, { day: cnf.dayFormat}, {month: cnf.monthFormat });
+		tableRowItem.appendChild(thExpiryEement);
+
+		let thChecksEement = document.createElement("th");
+		thChecksEement.textContent = e.checks;
+		tableRowItem.appendChild(thChecksEement);
+
+		let thStateEement = document.createElement("th");
+		thStateEement.textContent = e.state;
+		tableRowItem.appendChild(thStateEement);
+
+		tbody.appendChild(tableRowItem);
+	})
+
+	table.appendChild(tbody);
+	node.appendChild(table);
+
+}
 
 //#region UTILITIES
 
@@ -203,5 +215,65 @@ export let addDays = (date, days) => {
 	result.setDate(result.getDate() + days);
 	return result;
 };
+/**
+ * 
+ * @param {*} itemArray 
+ * @param {*} currentDate 
+ * @param {*} sectionId 
+ * @param {*} nodeContent 
+ */
+export let printContent = (itemArray, currentDate, sectionId, nodeContent) => {
+ 
+	let sectionContent = document.createElement("div");
+	sectionContent.id = sectionId;
 
+	if(sectionContent.id < cnf.weeksRuntime){
+		sectionContent.classList.add("d-none");
+	}
+
+	/* Create title with current date */
+	let title = document.createElement("h2");
+	title.textContent = `Date: ${currentDate.toLocaleDateString(cnf.locale, { day: cnf.dayFormat}, {month: cnf.monthFormat })}`;
+	sectionContent.appendChild(title);
+
+	createTable(itemArray, sectionContent);
+	/* Table FIltered */
+	let filtered = document.createElement("h2");
+	filtered.textContent = "Filtered";
+	sectionContent.appendChild(filtered);
+
+	createTable(itemArray.filter(checkItem), sectionContent);
+	
+	/* Add Buttons */
+	let buttonNext = document.createElement("button");
+	buttonNext.textContent = "Next";
+	buttonNext.onclick = function() {
+		let nextSection = document.getElementById(sectionId - 1);
+
+		sectionContent.classList.add("d-none");
+		nextSection.classList.remove("d-none")
+	}
+	if(sectionId === 1){
+	   buttonNext.classList.add("d-none");
+	}
+
+	let buttonPrevious = document.createElement("button");
+	buttonPrevious.textContent = "Previous";
+	buttonPrevious.onclick = function() {
+		if(sectionId + 1 <= cnf.weeksRuntime){
+		let previousSection = document.getElementById(sectionId + 1);
+
+		sectionContent.classList.add("d-none");
+		previousSection.classList.remove("d-none");
+		}
+	}
+	if(sectionId === cnf.weeksRuntime){
+	   buttonPrevious.classList.add("d-none");
+	}
+
+	sectionContent.appendChild(buttonPrevious);
+	sectionContent.appendChild(buttonNext);
+
+	nodeContent.appendChild(sectionContent);
+};
 //#endregion
