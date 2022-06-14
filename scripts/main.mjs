@@ -80,17 +80,19 @@ function printContent(itemArray, currentDate, sectionId) {
     /* Add Buttons */
     let buttonNext = document.createElement("button");
     buttonNext.textContent = "Next";
+    buttonNext.id = "next-button";
     buttonNext.onclick = function() {
         if (sectionId - 1 > 0) {
             let nextSection = document.getElementById(sectionId - 1);
 
             sectionContent.classList.add("d-none");
-            nextSection.classList.remove("d-none")
+            nextSection.classList.remove("d-none");
         } /* Else messaggio errore  */
     }
 
     let buttonPrevious = document.createElement("button");
     buttonPrevious.textContent = "Previous";
+    buttonPrevious.id = "previous-button";
     buttonPrevious.onclick = function() {
         if (sectionId + 1 <= cnf.weeksRuntime) {
             let previousSection = document.getElementById(sectionId + 1);
