@@ -67,20 +67,14 @@ function printContent(itemArray, currentDate, sectionId) {
     /* Create title with current date */
     let title = document.createElement("h2");
     title.textContent = `Date: ${currentDate.toLocaleDateString(cnf.locale, { day: cnf.dayFormat}, {month: cnf.monthFormat })}`;
+    title.classList.add("title");
     sectionContent.appendChild(title);
 
     createTable(itemArray, sectionContent);
-    /* Table FIltered */
-    let filtered = document.createElement("h2");
-    filtered.textContent = "Filtered";
-    sectionContent.appendChild(filtered);
-
-    createTable(itemArray.filter(fn.checkItem), sectionContent);
-
     /* Add Buttons */
     let buttonNext = document.createElement("button");
     buttonNext.textContent = "Next";
-    buttonNext.id = "next-button";
+    buttonNext.className = "button next-button";
     buttonNext.onclick = function() {
         if (sectionId - 1 > 0) {
             let nextSection = document.getElementById(sectionId - 1);
@@ -92,7 +86,7 @@ function printContent(itemArray, currentDate, sectionId) {
 
     let buttonPrevious = document.createElement("button");
     buttonPrevious.textContent = "Previous";
-    buttonPrevious.id = "previous-button";
+    buttonPrevious.classList.add("button");
     buttonPrevious.onclick = function() {
         if (sectionId + 1 <= cnf.weeksRuntime) {
             let previousSection = document.getElementById(sectionId + 1);
@@ -104,6 +98,15 @@ function printContent(itemArray, currentDate, sectionId) {
 
     sectionContent.appendChild(buttonPrevious);
     sectionContent.appendChild(buttonNext);
+
+    /* Table FIltered */
+    let filtered = document.createElement("h2");
+    filtered.textContent = "Filtered";
+    filtered.classList.add("title");
+    sectionContent.appendChild(filtered);
+
+    createTable(itemArray.filter(fn.checkItem), sectionContent);
+
 
     nodeContent.appendChild(sectionContent);
 }

@@ -189,8 +189,7 @@
      height: 150px;
      background-color: aqua;
  }
- 
- @media screen and (min-width: 480px) {}
+ /*@media screen and (min-width: 480px) {}*/
  /* Small devices (landscape phones, 576px and up) */
  /* @media (min-width: 576px) {
 }
@@ -207,26 +206,21 @@
 // XX-Large devices (larger desktops, 1400px and up)
 @media (min-width: 1400px) { ... } */
  
- .row-class:nth-child(1) {
-     background-color: red;
+ .next-button {
+     width: auto;
+     float: right;
+     border-radius: 50px 50px;
  }
  
- .row-class:nth-child(2) {
-     background-color: yellow;
+ .title {
+     text-align: center;
+     font-size: 2em;
  }
  
- .row-class:nth-child(3) {
-     background-color: green;
- }
- 
- #next-button {
-     position: absolute;
-     top: 35vh;
-     right: 65px;
- }
- 
- #previous-button {
-     position: absolute;
-     top: 35vh;
-     left: 40px;
+ .button {
+     font-size: 1em;
+     background-color: #283b43;
+     color: white;
+     padding: 10px 20px;
+     border-radius: 50px 50px;
  }
