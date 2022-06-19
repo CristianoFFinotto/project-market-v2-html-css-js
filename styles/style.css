@@ -235,6 +235,19 @@ th {
 
 /* media query */
 
+.form-container > label::after { 
+  content: "*";
+  color: red;
+}
+
+.valid-input {
+  background-color: lightgreen;
+}
+
+.error-input {
+  background-color: lightcoral;
+}
+
 @media screen and (min-width: 480px) {
 
    }
