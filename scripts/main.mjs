@@ -10,6 +10,7 @@
  import { config as cnf } from "./config.mjs"; //configuration object
  import * as fn from "./functions.mjs"; //main functions used to run the program
  import { itemNames } from "./itemsNames.mjs"; //array with a list of all possible item names
+
  
  let runtime = cnf.weeksRuntime;
  let nodeContent = document.getElementById("content");
@@ -19,7 +20,7 @@
 	 /* dare un messaggio sul DOM di errore */
  
 	 if (runtime <= 0) {
-		 console.log("The program runitme is either 0 or less. Please check your configuration file.");
+		 console.log("The program runtime is either 0 or less. Please check your configuration file.");
 		 return;
 	 }
  
@@ -54,6 +55,17 @@
 		 });
 		 };
 	 };
+
+	 let orderedItems = [];
+		let sortTable = (emptyArray, itemArray) => {
+		
+		itemArray.forEach(item => { 
+			emptyArray.push(item.name);
+		});
+		emptyArray.sort();
+		console.log(emptyArray);
+	}
+	 
  
  function printContent(itemArray, currentDate, sectionId) {
  
@@ -66,7 +78,8 @@
  
 	 /* Create title with current date */
 	 let title = document.createElement("h2");
-	 title.textContent = `Date: ${currentDate.toLocaleDateString(cnf.locale, { day: cnf.dayFormat}, {month: cnf.monthFormat })}`;
+	 title.textContent = 
+	 `Date: ${currentDate.toLocaleDateString(cnf.locale, { day: cnf.dayFormat}, {month: cnf.monthFormat })}`;
 	 sectionContent.appendChild(title);
  
 	 createTable(itemArray, sectionContent);
@@ -109,6 +122,7 @@
  function createTable(itemArray, node) {
 		 /* create table with items */
 		 let table = document.createElement("table");
+		 table.id = "table";
 		 let thead = document.createElement("thead");
 		 let tbody = document.createElement("tbody");
 		 let tableRowThead = document.createElement("tr");
@@ -116,10 +130,15 @@
 		 let thId = document.createElement("th");
 		 thId.textContent = "Id";
 		 tableRowThead.appendChild(thId);
+
 	 
 		 let thName = document.createElement("th");
 		 thName.textContent = "Name";
 		 tableRowThead.appendChild(thName);
+		 let arrowButton = document.createElement("button");
+		 arrowButton.classList.add("sort-button")
+		 thName.appendChild(arrowButton);
+		 arrowButton.addEventListener("click", function() { sortTable(orderedItems, itemArray) });
 	 
 		 let thExpiry = document.createElement("th");
 		 thExpiry.textContent = "Expiry Date";
@@ -163,18 +182,19 @@
 			 
 			switch(e.state) {
 				case "New":
-					thStateEement.style.backgroundColor = "green";
+					thStateEement.classList.add("green");
+						break;
 					case "Valid":
-						thStateEement.style.backgroundColor = "yellow";
+						thStateEement.classList.add("yellow");
 						break;
 					case "Old":
-						thStateEement.style.backgroundColor = "orange";
+						thStateEement.classList.add("orange");
 						break;
 					case "Expired":
-						thStateEement.style.backgroundColor = "red";
+						thStateEement.classList.add("red");
 						break;
 						default: 
-						thStateEement.style.backgroundColor = "transparent";
+						thStateEement.classList.add("transparent");
 			 }
 
 	 
@@ -185,6 +205,12 @@
 		 node.appendChild(table);
 	 
  }
+
+/*  let sortTable = itemArray => {
+	itemArray..sort();
+	console.log(itemArray)
+ } */
  
  init();
+
  

@@ -1,26 +1,21 @@
-/* ALL ELEMENTS STYLE */
+/* This is the main stylesheet of this project */
+
+/* Universal selector style */
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
 
+
+/* body */
+
 body {
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
-/* Class for hide element in js */
-.d-none {
-  display: none;
-}
 
-/* HEADER */
-header {
-  /* height: 20vh; */
-  padding: 0.5rem 1rem;
-  text-align: center;
-  border-bottom: 1px solid #d2d3db;
-  background-color: #283b43;
-}
+
+/* typography style*/
 
 h1 {
   font-size: 28px;
@@ -29,7 +24,6 @@ h1 {
   color: white;
   
 }
-
 
 h2 {
   font-size: 18px;
@@ -43,7 +37,17 @@ h2.form-heading {
   margin: 3%;
 }
 
-/* SETTING BUTTON */
+/* header */
+
+header {
+  padding: 0.5rem 1rem;
+  text-align: center;
+  border-bottom: 1px solid #d2d3db;
+  background-color: #283b43;
+}
+
+
+/* setting button style */
 
 .button-container {
   position: fixed;
@@ -62,14 +66,21 @@ button.setting-btn {
   margin-right: 45%;
   background-color: transparent;
   border: none;
-
 }
 
 
+/* button interaction */
 
 button.setting-btn:hover {
   animation: rotation 2s infinite linear;
 }
+
+button.setting-btn:active {
+  animation: none;
+}
+
+
+/* button animation */
 
 @keyframes rotation {
   50% {
@@ -80,9 +91,8 @@ button.setting-btn:hover {
   }
 }
 
-button.setting-btn:active {
-  animation: none;
-}
+
+/* button transform */
 
 .setting-btn-open {
   visibility: hidden;
@@ -103,8 +113,6 @@ button.setting-btn:active {
   border-radius: 25%;
   background-color: #283b43;
   color: white;
-  
-
 }
 
 .container {
@@ -124,11 +132,12 @@ button.setting-btn:active {
   z-index: 90;
 }
 
+
+/* form style */
+
 .form-container {
   width: 45%;
 }
-
-/* LABEL STYLE */
 
 label {
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
@@ -147,14 +156,6 @@ input {
   border-right: none;
   border-left: none;
   font-size: 0.7em;
-  /*  border-radius: 5px; */
-}
-
-input:focus {
-  border-top: none;
-  border-right: none;
-  border-left: none;
-  border-bottom: 1px solid black;
 }
 
 input[type="reset"],
@@ -170,8 +171,16 @@ input[type="submit"] {
   right: 30%;
 }
 
+/* form interaction */
+input:focus {
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  border-bottom: 1px solid black;
+}
 
-/* TABLE */
+/* table */
+
 table {
   width: 80%;
   margin-left: 10%;
@@ -181,7 +190,6 @@ table {
 thead {
   background-color: violet;
   line-height: 40px;
- 
 }
 
 th:nth-of-type(3) {
@@ -191,7 +199,7 @@ th:nth-of-type(3) {
 th {
   border: 2px solid black;
   width: 20%;
-  padding-top: 10px;
+  /* line-height */  
 }
 
 
@@ -199,6 +207,33 @@ th {
   height: 150px;
   background-color: aqua;
 }
+
+/* Javascript DOM manipulation */ 
+
+/* classes added to change the background color of the state th based on the item state */
+
+.green { 
+  background-color: green; /* new */
+}
+
+.yellow {
+  background-color: yellow; /* valid */
+}
+
+.orange {
+  background-color: orange; /* old */
+}
+
+.red {
+  background-color: red; /* expired */
+}
+
+.transparent {
+  background-color: transparent; /* removed */
+}
+
+
+/* media query */
 
 @media screen and (min-width: 480px) {
 

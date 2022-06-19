@@ -1,6 +1,5 @@
 
 
-
 let openCloseMenu = () => {
   let mainContainer = document.getElementById("main-container");
   let button = document.getElementById("setting-btn");
@@ -18,10 +17,3 @@ let openCloseMenu = () => {
 };
 
 let settingButton = document.getElementById("setting-btn").addEventListener("click", openCloseMenu);
-
-/* 
-switch (state) {
-  case "New":
-
-}
- */
