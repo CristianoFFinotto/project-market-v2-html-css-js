@@ -266,3 +266,22 @@ th {
 
 // XX-Large devices (larger desktops, 1400px and up)
 @media (min-width: 1400px) { ... } */
+ 
+ .next-button {
+     width: auto;
+     float: right;
+     border-radius: 50px 50px;
+ }
+ 
+ .title {
+     text-align: center;
+     font-size: 2em;
+ }
+ 
+ .button {
+     font-size: 1em;
+     background-color: #283b43;
+     color: white;
+     padding: 10px 20px;
+     border-radius: 50px 50px;
+ }
