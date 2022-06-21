@@ -1,6 +1,6 @@
 
 
-let openCloseMenu = () => {
+export let openCloseMenu = () => {
   let mainContainer = document.getElementById("main-container");
   let buttonContainer = document.getElementById("form-button-container")
   let button = document.getElementById("setting-btn");

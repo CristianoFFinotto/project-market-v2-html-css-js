@@ -5,10 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="HTML of our Javascript Project" />
-    <meta name="author" content="Cristiano Finotto" />
-    <meta name="author" content="Paolo Gippa" />
-    <meta name="author" content="Davide Murroni" />
-    <meta name="author" content="Simone Sporeni" />
+    <meta name="author" content="Cristiano Finotto, Paolo Gippa, Davide Murroni, Simone Sporeni" />
     <title>Market Project</title>
     <link rel="stylesheet" href="./styles/reset.css" />
     <link rel="stylesheet" href="./styles/style.css" />
@@ -39,24 +36,28 @@
           <a name="panel"></a>
           <h2 class="form-heading">Set Your Preferences</h2>
           <div class="form-container">
+            <label for="start-generator-product">Start generator product</label><br />
+            <input type="text" id="start-generator-product" placeholder="DD/MM/YYYY" />
+          </div>
+          <div class="form-container">
             <label for="start-date">Start Date</label><br />
             <input type="text" id="start-date" placeholder="DD/MM/YYYY" />
           </div>
           <div class="form-container">
             <label for="weeks">Number of Weeks</label>
-            <input type="number" id="weeks" />
+            <input type="number" id="weeks" placeholder="max 99" />
           </div>
           <div class="form-container">
             <label for="weekly-products">Weekly products</label>
-            <input type="number" id="weekly-products" />
+            <input type="number" id="weekly-products" placeholder="max 20"/>
           </div>
           <div class="form-container">
             <label for="days-in-week">Week Duration</label>
-            <input type="number" id="days-in-week" />
+            <input type="number" id="days-in-week" placeholder="max 9"/>
           </div>
           <div class="form-container" id="last-container" >
             <label for="check-threshold">Check Threshold</label>
-            <input type="number" id="check-threshold" />
+            <input type="number" id="check-threshold" placeholder="max 9"/>
           </div>
       </div>
       <div class="container" id="form-button-container">
@@ -69,6 +70,6 @@
       <div class="ender"></div>
     </main>
     <script type="module" src="./scripts/main.mjs"></script>
-    <script src="./scripts/test.js"></script>
+    <script type="module" src="./scripts/test.mjs"></script>
   </body>
 </html>

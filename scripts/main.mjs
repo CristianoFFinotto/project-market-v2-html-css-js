@@ -10,6 +10,7 @@
  import { config as cnf } from "./config.mjs"; //configuration object
  import * as fn from "./functions.mjs"; //main functions used to run the program
  import { itemNames } from "./itemsNames.mjs"; //array with a list of all possible item names
+ import {openCloseMenu} from "./test.mjs";
 
  let nodeContent = document.getElementById("content");
  
@@ -17,6 +18,7 @@
 
 /********************** Taking DOM node **********************/
 
+const inputStartGeneratorProduct = document.querySelector('#start-generator-product');
 const inputStartDate = document.querySelector('#start-date');
 const inputWeeks = document.querySelector('#weeks');
 const inputWeeklyProducts = document.querySelector('#weekly-products');
@@ -28,12 +30,12 @@ const inputReset = document.querySelector('#reset');
 /* REGEX */
 
 let regexInputStartDate = new RegExp('(0[1-9]|[1-3][0-9])\/(0[1-9]|1[0-2])\/[1-9][0-9]{3}');
-let regexInputWeek = new RegExp('[0-9]{1,2}');
-let regexInputWeeklyProducts = new RegExp('[0-9]{1,3}');
+let regexInputWeek = new RegExp('[1-9]{1,2}');
+let regexInputWeeklyProducts = new RegExp('[1-2][0-9]');
 let regexInputDaysInaWeek = new RegExp('[1-9]');
 let regexInputCheckTreshold = new RegExp('[1-9]');
 
-let inputs = [inputStartDate, inputWeeks, inputWeeklyProducts, inputDaysInaWeek, inputCheckTreshold];
+let inputs = [inputStartGeneratorProduct ,inputStartDate, inputWeeks, inputWeeklyProducts, inputDaysInaWeek, inputCheckTreshold];
 
 /* disable paste into inputs */
 
@@ -43,6 +45,8 @@ inputs.forEach((input) => input.addEventListener('paste', (e) => e.preventDefaul
 
 inputs.forEach((input) => input.autocomplete = 'off');
 
+inputStartGeneratorProduct.addEventListener('input', 
+(e) => validator.checkStartDate(inputStartGeneratorProduct, e, 10, regexInputStartDate, inputs, inputSave));
 inputStartDate.addEventListener('input', 
 (e) => validator.checkStartDate(inputStartDate, e, 10, regexInputStartDate, inputs, inputSave));
 inputWeeks.addEventListener('input', 
@@ -54,10 +58,22 @@ inputDaysInaWeek.addEventListener('input',
 inputCheckTreshold.addEventListener('input', 
 (e) => validator.checkOtherInputs(inputCheckTreshold, e, 1, regexInputCheckTreshold, inputs, inputSave));
 
-//TODO: finire di gestire il save
-
 inputSave.addEventListener('click', 
-(e) => {e.preventDefault(); console.log('tutto ok!')});
+(e) => {
+	e.preventDefault();
+
+	cnf.startGeneratorExpiring = inputStartGeneratorProduct.value;
+	cnf.startProgramDate = inputStartDate.value;
+	cnf.weeksRuntime = inputWeeks.value;
+	cnf.newItemsPerWeek = inputWeeklyProducts.value;
+	cnf.daysInWeek = inputDaysInaWeek.value;
+	cnf.shelfLife = inputCheckTreshold.value;
+
+	openCloseMenu();
+
+	init();
+});
+
 inputReset.addEventListener('click', 
 () => inputs.forEach(input => input.classList.remove('valid-input', 'error-input')));
 

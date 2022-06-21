@@ -16,9 +16,10 @@
  */
 
 export let config = {
-	daysInWeek: 6,
-	startingOffset: 3,
-	shelfLife: 2,
-	newItemsPerWeek: 5,
+	startGeneratorExpiring: '12/12/2022',
+	startProgramDate: '12/12/2022',
 	weeksRuntime: 4,
+	newItemsPerWeek: 5,
+	daysInWeek: 6,
+	shelfLife: 2,
 };
