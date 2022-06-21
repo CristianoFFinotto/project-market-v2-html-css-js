@@ -11,9 +11,6 @@
  import * as fn from "./functions.mjs"; //main functions used to run the program
  import { itemNames } from "./itemsNames.mjs"; //array with a list of all possible item names
  import {openCloseMenu} from "./test.mjs";
-
- let nodeContent = document.getElementById("content");
- 
  import * as validator from "./validator.mjs";
 
 /********************** Taking DOM node **********************/
@@ -29,7 +26,7 @@ const inputReset = document.querySelector('#reset');
 
 /* REGEX */
 
-let regexInputStartDate = new RegExp('(0[1-9]|[1-3][0-9])\/(0[1-9]|1[0-2])\/[1-9][0-9]{3}');
+let regexInputStartDate = new RegExp('(0[1-9]|1[0-2])\/(0[1-9]|[1-3][0-9])\/[1-9][0-9]{3}');
 let regexInputWeek = new RegExp('[1-9]{1,2}');
 let regexInputWeeklyProducts = new RegExp('[1-2][0-9]');
 let regexInputDaysInaWeek = new RegExp('[1-9]');
@@ -64,10 +61,11 @@ inputSave.addEventListener('click',
 
 	cnf.startGeneratorExpiring = inputStartGeneratorProduct.value;
 	cnf.startProgramDate = inputStartDate.value;
-	cnf.weeksRuntime = inputWeeks.value;
-	cnf.newItemsPerWeek = inputWeeklyProducts.value;
-	cnf.daysInWeek = inputDaysInaWeek.value;
-	cnf.shelfLife = inputCheckTreshold.value;
+	cnf.weeksRuntime = Number(inputWeeks.value);
+	cnf.newItemsPerWeek = Number(inputWeeklyProducts.value);
+	cnf.daysInWeek = Number(inputDaysInaWeek.value);
+	cnf.shelfLife = Number(inputCheckTreshold.value);
+	cnf.id = 1;
 
 	openCloseMenu();
 
@@ -75,7 +73,8 @@ inputSave.addEventListener('click',
 });
 
 inputReset.addEventListener('click', 
-() => inputs.forEach(input => input.classList.remove('valid-input', 'error-input')));
+() => {inputs.forEach(input => input.classList.remove('valid-input', 'error-input'))
+inputSave.disabled = true});
 
  let init = () => {
 
@@ -94,16 +93,14 @@ inputReset.addEventListener('click',
  
 	 let items = [];
 		 //startDate and endDate define the range of the generated items' expiry dates
-		 let startDate = new Date();
-		 let endDate = fn.addDays(startDate, runtime * cnf.daysInWeek);
- 
-		 let currentDate = fn.addDays(startDate, cnf.startingOffset);
+		 let currentDate = new Date(cnf.startProgramDate);
+		 let endDate = fn.addDays(currentDate, runtime * cnf.daysInWeek);
  
  
 		 let startConfig = {
 			 itemNames,
-			 startDate,
 			 endDate,
+			 startExpiry: new Date(cnf.startGeneratorExpiring),
 			 currentDate,
 			 shelfLife: cnf.shelfLife,
 		 };
@@ -111,9 +108,11 @@ inputReset.addEventListener('click',
 		 for(let i = runtime; i > 0; i--){
 		 // 1) Add new items
 		 items.push(...fn.generateItems(cnf.newItemsPerWeek, startConfig));
-		 fn.printContent(items, currentDate, i, nodeContent);
+		 fn.printContent(items, new Date(currentDate), i, nodeContent);
 		 //Filter the items
 		 items = items.filter(fn.checkItem);
+		 console.log(new Date(currentDate));
+		 console.log(cnf.daysInWeek);
 		 // 4) Add days to the current date
 		 currentDate = fn.addDays(currentDate, cnf.daysInWeek);
 		 // 5) Update the items (state and checks)

@@ -12,14 +12,12 @@
  import { config as cnf } from "./config.mjs";
 //#region ITEM GENERATION
 
-let id = 1;
-
 
 /**
  * Returns a global id variable and increments it by 1
  * @returns {number} the global id variable before incrementing it
  */
-let uniqueId = () => id++;
+let uniqueId = () => cnf.id++;
 
 /**
  * Picks a random item name from an array of item names and returns it
@@ -60,7 +58,7 @@ export let generateItems = (numberOfItems, startConfig) => {
 		let item = {
 			id: uniqueId(),
 			name: generateName(startConfig.itemNames),
-			expiry: generateExpiry(startConfig.startDate, startConfig.endDate),
+			expiry: generateExpiry(startConfig.startExpiry, startConfig.endDate),
 			checks: 0,
 			state: "",
 		};

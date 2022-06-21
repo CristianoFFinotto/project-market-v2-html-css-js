@@ -16,10 +16,11 @@
  */
 
 export let config = {
-	startGeneratorExpiring: '12/12/2022',
+	startGeneratorExpiring: '12/10/2022',
 	startProgramDate: '12/12/2022',
 	weeksRuntime: 4,
 	newItemsPerWeek: 5,
 	daysInWeek: 6,
 	shelfLife: 2,
+	id: 1
 };
