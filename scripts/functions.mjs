@@ -187,6 +187,22 @@ let createTable = (itemArray, node) => {
 		thStateEement.textContent = e.state;
 		tableRowItem.appendChild(thStateEement);
 
+		switch(e.state) {
+			case "New":
+				tableRowItem.classList.add("green");
+					break;
+				case "Valid":
+					tableRowItem.classList.add("yellow");
+					break;
+				case "Old":
+					tableRowItem.classList.add("orange");
+					break;
+				case "Expired":
+					tableRowItem.classList.add("red");
+					break;
+					default: 
+					tableRowItem.classList.add("transparent");
+		 }
 		tbody.appendChild(tableRowItem);
 	})
 
@@ -223,7 +239,7 @@ export let addDays = (date, days) => {
  * @param {*} nodeContent 
  */
 export let printContent = (itemArray, currentDate, sectionId, nodeContent) => {
- 
+
 	let sectionContent = document.createElement("div");
 	sectionContent.id = sectionId;
 

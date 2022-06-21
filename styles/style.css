@@ -242,6 +242,11 @@ th {
   background-color: transparent; /* removed */
 }
 
+/* Class for hide elements*/
+.d-none {
+  display: none;
+}
+
 
 /* media query */
 
