@@ -28,7 +28,7 @@ const inputReset = document.querySelector('#reset');
 
 let regexInputStartDate = new RegExp('(0[1-9]|1[0-2])\/(0[1-9]|[1-3][0-9])\/[1-9][0-9]{3}');
 let regexInputWeek = new RegExp('[1-9]{1,2}');
-let regexInputWeeklyProducts = new RegExp('[1-2][0-9]');
+let regexInputWeeklyProducts = new RegExp('[0-9]|[1-2][0-9]');
 let regexInputDaysInaWeek = new RegExp('[1-9]');
 let regexInputCheckTreshold = new RegExp('[1-9]');
 
@@ -42,6 +42,23 @@ inputs.forEach((input) => input.addEventListener('paste', (e) => e.preventDefaul
 
 inputs.forEach((input) => input.autocomplete = 'off');
 
+/* 
+	disable keys keyboard
+	
+	for date remove only letters without /
+	for numbers remove all letters and /
+*/
+
+[inputStartGeneratorProduct ,inputStartDate].forEach((input) => input.addEventListener('keydown', (e) => {
+	if(e.key.match(/[^\/\d]/g) && e.key !== 'Backspace' && e.key !== 'Tab')
+		e.preventDefault();
+}));
+
+[inputWeeks, inputWeeklyProducts, inputDaysInaWeek, inputCheckTreshold].forEach((input) => input.addEventListener('keydown', (e) => {
+	if(e.key.match(/[^\d]/g) && e.key !== 'Backspace' && e.key !== 'Tab' && e.key !== 'ArrowUp' && e.key !== 'ArrowDown')
+		e.preventDefault();
+}));
+
 inputStartGeneratorProduct.addEventListener('input', 
 (e) => validator.checkStartDate(inputStartGeneratorProduct, e, 10, regexInputStartDate, inputs, inputSave));
 inputStartDate.addEventListener('input', 
@@ -49,7 +66,7 @@ inputStartDate.addEventListener('input',
 inputWeeks.addEventListener('input', 
 (e) => validator.checkOtherInputs(inputWeeks, e, 2, regexInputWeek, inputs, inputSave));
 inputWeeklyProducts.addEventListener('input', 
-(e) => validator.checkOtherInputs(inputWeeklyProducts, e, 3, regexInputWeeklyProducts, inputs, inputSave));
+(e) => validator.checkOtherInputs(inputWeeklyProducts, e, 2, regexInputWeeklyProducts, inputs, inputSave));
 inputDaysInaWeek.addEventListener('input', 
 (e) => validator.checkOtherInputs(inputDaysInaWeek, e, 1, regexInputDaysInaWeek, inputs, inputSave));
 inputCheckTreshold.addEventListener('input', 
