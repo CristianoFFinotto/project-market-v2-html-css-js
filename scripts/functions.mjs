@@ -16,41 +16,46 @@
  * Returns a global id variable and increments it by 1
  * @returns {number} the global id variable before incrementing it
  */
-let uniqueId = () => cnf.id++;
+
+function uniqueId() {
+	return cnf.id++
+}
 
 /**
  * Picks a random item name from an array of item names and returns it
  * @param {object} itemNames - names of various possible items
  * @returns {string} the randomly selected item name
  */
+
 let generateName = itemNames => {
 	let randomIndex = Math.floor(Math.random() * itemNames.length);
 	return itemNames[randomIndex];
 };
 
 /**
- * Generates a random date betweeen two date parameters
+ * Generates a random date betweeen two date parameters comparing timestamp
  * @param {Date} start - starting point for the generation of the date (no dates before)
  * @param {Date} end - ending point for the generation of the date (no dates after)
  * @returns {Date} a random date bewteen start and end
  */
-let generateExpiry = (start, end) => new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
-//new Date(new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime())).setHours(0, 0, 0, 0));
-//If comparing timestamps when checking if a product is expired, this could be considered a possible bugfix
+
+function generateExpiry(start, end) {
+	return new Date(new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime())).setHours(0, 0, 0, 0));
+}
 
 /**
  * Generates an item with random data and returns it
- * The item structure is as follows: { id, name, expiry, checks, state }
  * @param {number} numberOfItems - the number of new item objects to generate
- * @param {object} startConfig - an object containing all the parameters necessary for the generation of an item
- * @param {object} startConfig.itemNames - a list of item names to be selected from randomly
- * @param {Date} startConfig.startDate - the date that starts the range for a random date generation (item.expiry)
- * @param {Date} startConfig.endDate - the date that ends the range for a random date generation (item.expiry)
- * @param {Date} startConfig.currentDate - the current date to be used when updating the state of the item
- * @param {number} startConfig.shelfLife - the number of weeks an item can be on a shelf before it is considered old
+ * @param {object} itemNames - a list of item names to be selected from randomly
+ * @param {Date} startExpiry - the date that starts the range for a random date generation (item.expiry)
+ * @param {Date} endDate - the date that ends the range for a random date generation (item.expiry)
+ * @param {Date} currentDate - the current date to be used when updating the state of the item
+ * @param {number} shelfLife - the number of weeks an item can be on a shelf before it is considered old
  * @returns {object} - an array of item objects filled with data as per defined by its structure
  */
-export let generateItems = (numberOfItems, itemNames, endDate, startExpiry, currentDate, shelfLife) => {
+
+export function generateItems(numberOfItems, itemNames, startExpiry, endDate, currentDate, shelfLife) {
+
 	let weeklyItems = [];
 
 	for (let i = 0; i < numberOfItems; i++) {
@@ -66,7 +71,7 @@ export let generateItems = (numberOfItems, itemNames, endDate, startExpiry, curr
 	}
 
 	return weeklyItems;
-};
+}
 
 /**
  * Updates the state of an item object based on its expiry date and shelf life
@@ -78,8 +83,10 @@ export let generateItems = (numberOfItems, itemNames, endDate, startExpiry, curr
  * @param {Date} currentDate - the current date used to check if an item is expired
  * @param {number} shelfLife - the shelf life of an item used to check if it's old
  */
-export let updateState = (item, currentDate, shelfLife) => {
-	if (item.checks === 0 && item.expiry > currentDate) {
+
+export function updateState(item, currentDate, shelfLife){
+
+	if (item.checks === 0 && item.expiry >= currentDate) {
 		item.state = "New"; 
 		return;
 	}
@@ -102,16 +109,19 @@ export let updateState = (item, currentDate, shelfLife) => {
  * @param {object} item - the item object to update
  * @param {number} item.checks - the number of checks (number of weeks on a shelf) an item has
  */
-export let updateChecks = item => {
+
+export function updateChecks(item) {
 	item.checks++;
-};
+}
 
 /**
- * 
- * @param {*} itemArray 
- * @param {*} node 
+ * Function create DOM table
+ * @param {*} itemArray - array of product
+ * @param {*} node - DOM node where append table
  */
-let createTable = (itemArray, node) => {
+
+function createTable(itemArray, node) {
+
 	/* create table with items */
 	let table = document.createElement("table");
 	let thead = document.createElement("thead");
@@ -192,7 +202,10 @@ let createTable = (itemArray, node) => {
  * @param {object} item - the item object to check
  * @returns {boolean} true if item.state is "New" or "Valid", false otherwise
  */
-export let checkItem = item => item.state === "New" || item.state === "Valid";
+
+export function checkItem (item) {
+	return item.state === "New" || item.state === "Valid";
+}
 
 /**
  * Adds any amount of days to a date object and returns the result
@@ -200,19 +213,22 @@ export let checkItem = item => item.state === "New" || item.state === "Valid";
  * @param {number} - the number of days to increment the date by
  * @returns {Date} the date after the days have been added
  */
-export let addDays = (date, days) => {
+
+export function addDays(date, days){
 	let result = new Date(date);
 	result.setDate(result.getDate() + days);
 	return result;
-};
+}
+
 /**
  * Function print content into table
- * @param {*} itemArray 
- * @param {*} currentDate 
+ * @param {*} itemArray - array of product
+ * @param {*} currentDate - actual date
  * @param {*} sectionId 
  * @param {*} nodeContent 
  */
-export let printContent = (itemArray, currentDate, sectionId, nodeContent) => {
+
+export function printContent(itemArray, currentDate, sectionId, nodeContent) {
 
 	let sectionContent = document.createElement("div");
 	sectionContent.id = sectionId;
@@ -267,7 +283,11 @@ export let printContent = (itemArray, currentDate, sectionId, nodeContent) => {
 	nodeContent.appendChild(sectionContent);
 };
 
-export let openCloseMenu = () => {
+/**
+ * Function open close settings panel
+ */
+
+export function openCloseMenu() {
 	let mainContainer = document.getElementById("main-container");
 	let buttonContainer = document.getElementById("form-button-container")
 	let button = document.getElementById("setting-btn");
@@ -283,4 +303,4 @@ export let openCloseMenu = () => {
 	} else {
 	  button.className = "setting-btn";
 	}
-  };
+}

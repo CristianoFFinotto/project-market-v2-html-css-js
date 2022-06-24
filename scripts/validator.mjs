@@ -3,7 +3,7 @@
  * @authors Davide Murroni, Simone Sporeni, Paolo Gippa, Cristiano Francesco Finotto
  * file used to validate inputs form
  *
- * rhis file check inputs
+ * this file check inputs
  */
 
 /**Function validate only startDate

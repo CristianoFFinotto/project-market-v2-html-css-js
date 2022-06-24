@@ -24,35 +24,58 @@ const inputSave = document.querySelector('#save');
 const inputReset = document.querySelector('#reset');
 const inputSetting = document.querySelector('#setting-btn');
 
-/* REGEX */
+/********************** REGEX **********************/
 
 let regexInputStartDate = new RegExp('(0[1-9]|1[0-2])\/(0[1-9]|[1-3][0-9])\/[1-9][0-9]{3}');
 
-let inputs = [inputStartGeneratorProduct ,inputStartDate, inputWeeks, inputWeeklyProducts, inputDaysInaWeek, inputCheckTreshold];
+let inputs = [
+	inputStartGeneratorProduct ,
+	inputStartDate,
+	inputWeeks,
+	inputWeeklyProducts,
+	inputDaysInaWeek,
+	inputCheckTreshold
+];
 
-/* disable paste into inputs */
+/********************** disable paste into inputs **********************/
 
 inputs.forEach((input) => input.addEventListener('paste', (e) => e.preventDefault()));
 
-/* disable autocomplete inputs */
+/********************** disable autocomplete inputs **********************/
 
 inputs.forEach((input) => input.autocomplete = 'off');
 
-/* permit insert number backspace tab arrow t,r,b,l slash*/
+/********************** permit insert number backspace tab arrow t,r,b,l slash **********************/
 
-[inputStartGeneratorProduct ,inputStartDate].forEach((input) => input.addEventListener('keydown', (e) => {
-	if(e.key.match(/[^\/\d]/g) && e.key !== 'Backspace' && e.key !== 'Tab' && e.key !== 'ArrowUp' && e.key !== 'ArrowDown' && e.key !== 'ArrowLeft' && e.key !== 'ArrowRight')
+[inputStartGeneratorProduct ,inputStartDate]
+.forEach((input) => input.addEventListener('keydown', (e) => {
+	if(
+		e.key.match(/[^\/\d]/g) && e.key !== 'Backspace' 
+		&& e.key !== 'Tab' && e.key !== 'ArrowUp' 
+		&& e.key !== 'ArrowDown' 
+		&& e.key !== 'ArrowLeft' 
+		&& e.key !== 'ArrowRight'
+	)
 		e.preventDefault();
 }));
 
-/* permit insert number backspace tab arrow t,r,b,l minus*/
+/********************** permit insert number backspace tab arrow t,r,b,l minus **********************/
 
-[inputWeeks, inputWeeklyProducts, inputDaysInaWeek, inputCheckTreshold].forEach((input) => input.addEventListener('keydown', (e) => {
-	if(e.key.match(/[^-\d]/g) && e.key !== 'Backspace' && e.key !== 'Tab' && e.key !== 'ArrowUp' && e.key !== 'ArrowDown' && e.key !== 'ArrowLeft' && e.key !== 'ArrowRight')
+[inputWeeks, inputWeeklyProducts, inputDaysInaWeek, inputCheckTreshold]
+.forEach((input) => input.addEventListener('keydown', (e) => {
+	if(
+		e.key.match(/[^-\d]/g) 
+		&& e.key !== 'Backspace' 
+		&& e.key !== 'Tab' 
+		&& e.key !== 'ArrowUp' 
+		&& e.key !== 'ArrowDown' 
+		&& e.key !== 'ArrowLeft' 
+		&& e.key !== 'ArrowRight'
+	)
 		e.preventDefault();
 }));
 
-/* trigger callbacks with event input */
+/********************** trigger callbacks with event input **********************/
 
 inputStartGeneratorProduct.addEventListener('input', 
 (e) => validator.checkStartDate(inputStartGeneratorProduct, e, cnf.maxLenghtDate, regexInputStartDate, inputs, inputSave));
@@ -86,16 +109,23 @@ inputSave.addEventListener('click',
 	init();
 });
 
+/********************** reset input and style **********************/
+
 inputReset.addEventListener('click', 
 () => {inputs.forEach(input => input.classList.remove('valid-input', 'error-input'))
 inputSave.disabled = true});
 
- let init = () => {
+/********************** start program with function **********************/
+
+function init() {
 
 	let runtime = cnf.weeksRuntime;
 	let nodeContent = document.getElementById("content");
 
-	/* remove all row table */
+	/********************** 
+	 * clear table when called init, to restart
+	 * cleaned when save button pressed 
+	 ***********************/
 
 	while (nodeContent.hasChildNodes()) {
 		nodeContent.removeChild(nodeContent.firstChild);
@@ -103,7 +133,7 @@ inputSave.disabled = true});
 	
 	 let items = [];
 
-		 //startDate and endDate define the range of the generated items' expiry dates
+		 /* startDate and endDate define the range of the generated items' expiry dates */
 
 		 let currentDate = new Date(cnf.startProgramDate);
 		 let endDate = fn.addDays(currentDate, runtime * cnf.daysInWeek);
@@ -111,14 +141,14 @@ inputSave.disabled = true});
 		 let shelfLife = cnf.shelfLife;
  
 		 for(let i = runtime; i > 0; i--){
-		 // 1) Add new items
+		 /* 1) Add new items */ 
 		 items.push(...fn.generateItems(cnf.newItemsPerWeek, itemNames, endDate, startExpiry, currentDate, shelfLife));
 		 fn.printContent(items, new Date(currentDate), i, nodeContent);
-		 //Filter the items
+		 /* 2) Filter the items */
 		 items = items.filter(fn.checkItem);
-		 // 4) Add days to the current date
+		 /* 4) Add days to the current date */
 		 currentDate = fn.addDays(currentDate, cnf.daysInWeek);
-		 // 5) Update the items (state and checks)
+		 /* 5) Update the items (state and checks) */
 		 items.forEach(item => {
 			 fn.updateChecks(item);
 			 fn.updateState(item, currentDate, cnf.shelfLife);

@@ -7,11 +7,11 @@
   box-sizing: border-box;
 }
 
-
 /* body */
 
+html,
 body {
-  font-family: monogamma 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-family: Verdana, sans-serif;
 }
 
 
@@ -19,14 +19,9 @@ body {
 
 h1 {
   font-size: 28px;
-  font-size: 600;
   padding: 2.5% 0% 0% 0%;
   color: white;
-  
-}
 
-h2 {
-  font-size: 18px;
 }
 
 h2.form-heading {
@@ -62,19 +57,16 @@ header {
   height: 10vh;
   width: 100%;
   background-color: #283b43;
-  z-index: 99;
+  display: flex;
+  justify-content: center;
+  z-index: 1;
 }
 
 button.setting-btn {
-  height: 100%;
-  width: 10%;
   font-size: 24px;
-  margin-left: 45%;
-  margin-right: 45%;
   background-color: transparent;
   border: none;
 }
-
 
 /* button interaction */
 
@@ -86,14 +78,13 @@ button.setting-btn:active {
   animation: none;
 }
 
-
-
 /* button animation */
 
 @keyframes rotation {
   50% {
     transform: rotate(180deg);
   }
+
   100% {
     transform: rotate(360deg);
   }
@@ -105,6 +96,7 @@ button.setting-btn:active {
 .setting-btn-open {
   visibility: hidden;
 }
+
 .setting-btn-open::after {
   content: "X";
   position: fixed;
@@ -114,7 +106,6 @@ button.setting-btn:active {
   width: 7%;
   height: 9%;
   font-size: 22px;
-  font-weight: 600;
   padding: 13px 5px;
   visibility: visible;
   border-radius: 25%;
@@ -130,15 +121,10 @@ button.setting-btn:active {
 
 .container-open {
   position: sticky;
-  bottom: 3;
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  flex-flow: row wrap;
   justify-content: space-around;
-  width: 100%;
-  z-index: 90;
 }
-
 
 /* form style */
 
@@ -148,7 +134,7 @@ button.setting-btn:active {
 
 label {
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
-/*   margin-left: 3%;
+  /*   margin-left: 3%;
   margin-top: 3%; */
   font-size: 0.8em;
 }
@@ -181,10 +167,7 @@ input[type="submit"] {
 
 /* form interaction */
 input:focus {
-  border-top: none;
-  border-right: none;
-  border-left: none;
-  border-bottom: 1px solid black;
+  outline: none;
 }
 
 /* table */
@@ -217,28 +200,33 @@ th {
   background-color: aqua;
 }
 
-/* Javascript DOM manipulation */ 
+/* Javascript DOM manipulation */
 
 /* classes added to change the background color of the state th based on the item state */
 
-.green { 
-  background-color: green; /* new */
+.green {
+  background-color: green;
+  /* new */
 }
 
 .yellow {
-  background-color: yellow; /* valid */
+  background-color: yellow;
+  /* valid */
 }
 
 .orange {
-  background-color: orange; /* old */
+  background-color: orange;
+  /* old */
 }
 
 .red {
-  background-color: red; /* expired */
+  background-color: red;
+  /* expired */
 }
 
 .transparent {
-  background-color: transparent; /* removed */
+  background-color: transparent;
+  /* removed */
 }
 
 /* Class for hide elements*/
@@ -249,7 +237,7 @@ th {
 
 /* media query */
 
-.form-container > label::after { 
+.form-container>label::after {
   content: "*";
   color: red;
 }
@@ -262,9 +250,8 @@ th {
   background-color: lightcoral;
 }
 
-@media screen and (min-width: 480px) {
+@media screen and (min-width: 480px) {}
 
-   }
 /* Small devices (landscape phones, 576px and up) */
 /* @media (min-width: 576px) {
     }
@@ -280,22 +267,22 @@ th {
 
 // XX-Large devices (larger desktops, 1400px and up)
 @media (min-width: 1400px) { ... } */
- 
- .next-button {
-     width: auto;
-     float: right;
-     border-radius: 50px 50px;
- }
- 
- .title {
-     text-align: center;
-     font-size: 2em;
- }
- 
- .button {
-     font-size: 1em;
-     background-color: #283b43;
-     color: white;
-     padding: 10px 20px;
-     border-radius: 50px 50px;
- }
+
+.next-button {
+  width: auto;
+  float: right;
+  border-radius: 50px 50px;
+}
+
+.title {
+  text-align: center;
+  font-size: 2em;
+}
+
+.button {
+  font-size: 1em;
+  background-color: #283b43;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 50px 50px;
+}
