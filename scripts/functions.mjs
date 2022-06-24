@@ -10,7 +10,8 @@
  * - manipulate certain useful variables (increment a date, pad a string, pad a number)
  */
 
- import { config as cnf } from "./config.mjs";
+ /* import { create } from "core-js/core/object"; */
+import { config as cnf } from "./config.mjs";
 
 /**
  * Returns a global id variable and increments it by 1
@@ -125,6 +126,9 @@ let createTable = (itemArray, node) => {
 	let thName = document.createElement("th");
 	thName.textContent = "Name";
 	tableRowThead.appendChild(thName);
+	let arrowButton = document.createElement("button");
+    arrowButton.addEventListener("click", () => sortTable(document.querySelector("table"), 1, true));
+    thName.appendChild(arrowButton);
 
 	let thExpiry = document.createElement("th");
 	thExpiry.textContent = "Expiry Date";
@@ -144,23 +148,23 @@ let createTable = (itemArray, node) => {
 	itemArray.forEach(item => {
 		let tableRowItem = document.createElement("tr");
 
-		let thIdElement = document.createElement("th");
+		let thIdElement = document.createElement("td");
 		thIdElement.textContent = item.id;
 		tableRowItem.appendChild(thIdElement);
 
-		let thNameElement = document.createElement("th");
+		let thNameElement = document.createElement("td");
 		thNameElement.textContent = item.name;
 		tableRowItem.appendChild(thNameElement);
 
-		let thExpiryEement = document.createElement("th");
+		let thExpiryEement = document.createElement("td");
 		thExpiryEement.textContent = item.expiry.toLocaleDateString();
 		tableRowItem.appendChild(thExpiryEement);
 
-		let thChecksEement = document.createElement("th");
+		let thChecksEement = document.createElement("td");
 		thChecksEement.textContent = item.checks;
 		tableRowItem.appendChild(thChecksEement);
 
-		let thStateEement = document.createElement("th");
+		let thStateEement = document.createElement("td");
 		thStateEement.textContent = item.state;
 		tableRowItem.appendChild(thStateEement);
 
@@ -186,6 +190,97 @@ let createTable = (itemArray, node) => {
 	table.appendChild(tbody);
 	node.appendChild(table);
 }
+
+
+let sortTable = (table, column, asc = true) => {
+	let direction = asc ? 1 : -1;
+	let tableBody = table.tBodies[0];
+	let tableRows = Array.from(tableBody.querySelectorAll("tr"));
+
+
+	let sortedRows = tableRows.sort((a, b) => {
+		console.log(a);
+		console.log(b);
+		let aColumn = a.querySelector(`td:nth-child(${column + 1})`).textContent.trim();
+		let bColumn = b.querySelector(`td:nth-child(${column + 1})`).textContent.trim();
+		
+		return aColumn > bColumn ? (1 * direction) : (-1 * direction);
+	});
+	/* console.log(sortedRows) */
+
+	while (tableBody.firstChild) {
+		tableBody.removeChild(tableBody.firstChild);
+	}
+
+	tableBody.append(...sortedRows);
+}
+
+/* function orderElement(a, b) {
+	if ( a.name < b.name) {
+		return -1
+	} 
+	if ( a.name > b.name) {
+		return 1;
+	} 
+	return 0;
+  }
+
+let sortTable = (items) => {
+	let tbody = document.getElementsByTagName("tbody");
+	let tableData = document.querySelectorAll("td");
+	for (let i = 0 ; i < tableData.length ; ++i) {
+	  tableData[i].remove();
+	  items.sort(orderElement)
+	}
+	console.log(items);
+	createTable(items, sectionContent);
+} */
+/* 	items.forEach(item => {
+		let tableRowItem = document.createElement("tr");
+
+		let thIdElement = document.createElement("td");
+		thIdElement.textContent = item.id;
+		tableRowItem.appendChild(thIdElement);
+
+		let thNameElement = document.createElement("td");
+		thNameElement.textContent = item.name;
+		tableRowItem.appendChild(thNameElement);
+
+		let thExpiryEement = document.createElement("td");
+		thExpiryEement.textContent = item.expiry.toLocaleDateString();
+		tableRowItem.appendChild(thExpiryEement);
+
+		let thChecksEement = document.createElement("td");
+		thChecksEement.textContent = item.checks;
+		tableRowItem.appendChild(thChecksEement);
+
+		let thStateEement = document.createElement("td");
+		thStateEement.textContent = item.state;
+		tableRowItem.appendChild(thStateEement);
+
+		switch(item.state) {
+			case "New":
+				tableRowItem.classList.add("green");
+					break;
+				case "Valid":
+					tableRowItem.classList.add("yellow");
+					break;
+				case "Old":
+					tableRowItem.classList.add("orange");
+					break;
+				case "Expired":
+					tableRowItem.classList.add("red");
+					break;
+					default: 
+					tableRowItem.classList.add("transparent");
+		 }
+		tbody.appendChild(tableRowItem);
+	})
+
+	table.appendChild(tbody);
+	node.appendChild(table);
+} */
+  
 
 /**
  * Checks if an item has a state of either "New" or "Valid"

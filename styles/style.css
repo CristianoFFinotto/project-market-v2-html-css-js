@@ -11,6 +11,7 @@
 /* body */
 
 body {
+  text-align: center;
   font-family: monogamma 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
@@ -31,7 +32,6 @@ h2 {
 
 h2.form-heading {
   width: 100vw;
-  text-align: center;
   font-weight: 600;
   font-size: 24px;
   margin: 3%;
@@ -44,7 +44,6 @@ header {
   flex-direction: row;
   justify-content: space-around;
   padding: 0.5rem 1rem;
-  text-align: center;
   border-bottom: 1px solid #d2d3db;
   background-color: #5CA09F;
 }
@@ -149,8 +148,6 @@ button.setting-btn:active {
 
 label {
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
-/*   margin-left: 3%;
-  margin-top: 3%; */
   font-size: 0.8em;
 }
 
@@ -202,11 +199,11 @@ thead {
   line-height: 40px;
 }
 
-th:nth-of-type(3) {
+::-webkit-textfield-decoration-container:nth-of-type(3) {
   width: 25%;
 }
 
-th {
+th, td {
   border: 2px solid black;
   width: 20%;
   height: 5vh;
@@ -253,7 +250,6 @@ th {
 
 /* Style text table */
 .text-table {
-  text-align: center;
   font-size: 2em;
   margin: 20px 0;
   text-transform: uppercase;
