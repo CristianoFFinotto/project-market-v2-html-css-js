@@ -240,19 +240,25 @@ export function printContent(itemArray, currentDate, sectionId, nodeContent) {
 	/* Create title with current date */
 	let title = document.createElement("h2");
 	title.textContent = `Date: ${currentDate.toLocaleDateString()}`;
+	title.classList.add("text-table");
 	sectionContent.appendChild(title);
 
 	createTable(itemArray, sectionContent);
+
+	/* Container of subtitle and buttons */
+	let buttonDiv = document.createElement("div");
+	buttonDiv.classList.add("flex-container");
+
+
 	/* Table FIltered */
 	let filtered = document.createElement("h2");
 	filtered.textContent = "Filtered";
-	sectionContent.appendChild(filtered);
-
-	createTable(itemArray.filter(checkItem), sectionContent);
+	filtered.classList.add("text-table");
 	
 	/* Add Buttons */
 	let buttonNext = document.createElement("button");
 	buttonNext.textContent = "Next";
+	buttonNext.classList.add("button");
 	buttonNext.onclick = function() {
 		let nextSection = document.getElementById(sectionId - 1);
 
@@ -260,11 +266,12 @@ export function printContent(itemArray, currentDate, sectionId, nodeContent) {
 		nextSection.classList.remove("d-none")
 	}
 	if(sectionId === 1){
-	   buttonNext.classList.add("d-none");
+	   buttonNext.classList.add("v-hidden");
 	}
 
 	let buttonPrevious = document.createElement("button");
 	buttonPrevious.textContent = "Previous";
+	buttonPrevious.classList.add("button");
 	buttonPrevious.onclick = function() {
 		if(sectionId + 1 <= cnf.weeksRuntime){
 		let previousSection = document.getElementById(sectionId + 1);
@@ -274,11 +281,16 @@ export function printContent(itemArray, currentDate, sectionId, nodeContent) {
 		}
 	}
 	if(sectionId === cnf.weeksRuntime){
-	   buttonPrevious.classList.add("d-none");
+	   buttonPrevious.classList.add("v-hidden");
 	}
 
-	sectionContent.appendChild(buttonPrevious);
-	sectionContent.appendChild(buttonNext);
+	buttonDiv.appendChild(buttonPrevious);
+	buttonDiv.appendChild(filtered);
+	buttonDiv.appendChild(buttonNext);
+
+	sectionContent.appendChild(buttonDiv);
+
+	createTable(itemArray.filter(checkItem), sectionContent);
 
 	nodeContent.appendChild(sectionContent);
 };
