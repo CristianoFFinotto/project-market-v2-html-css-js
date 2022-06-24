@@ -22,5 +22,10 @@ export let config = {
 	newItemsPerWeek: 5,
 	daysInWeek: 6,
 	shelfLife: 2,
-	id: 1
+	id: 1,
+	maxLenghtDate: 10,
+	maxWeeks: 99,
+	maxWeeklyProducts: 20,
+	maxDaysInaWeek: 9,
+	maxTreshold: 9
 };

@@ -9,9 +9,8 @@
  * - print the items to the console
  * - manipulate certain useful variables (increment a date, pad a string, pad a number)
  */
- import { config as cnf } from "./config.mjs";
-//#region ITEM GENERATION
 
+ import { config as cnf } from "./config.mjs";
 
 /**
  * Returns a global id variable and increments it by 1
@@ -49,29 +48,25 @@ let generateExpiry = (start, end) => new Date(start.getTime() + Math.random() * 
  * @param {Date} startConfig.endDate - the date that ends the range for a random date generation (item.expiry)
  * @param {Date} startConfig.currentDate - the current date to be used when updating the state of the item
  * @param {number} startConfig.shelfLife - the number of weeks an item can be on a shelf before it is considered old
- * @returns {object} an array of item objects filled with data as per defined by its structure
+ * @returns {object} - an array of item objects filled with data as per defined by its structure
  */
-export let generateItems = (numberOfItems, startConfig) => {
+export let generateItems = (numberOfItems, itemNames, endDate, startExpiry, currentDate, shelfLife) => {
 	let weeklyItems = [];
 
 	for (let i = 0; i < numberOfItems; i++) {
 		let item = {
 			id: uniqueId(),
-			name: generateName(startConfig.itemNames),
-			expiry: generateExpiry(startConfig.startExpiry, startConfig.endDate),
+			name: generateName(itemNames),
+			expiry: generateExpiry(startExpiry, endDate),
 			checks: 0,
 			state: "",
 		};
-		updateState(item, startConfig.currentDate, startConfig.shelfLife);
+		updateState(item, currentDate, shelfLife);
 		weeklyItems.push(item);
 	}
 
 	return weeklyItems;
 };
-
-//#endregion
-
-//#region ITEM MANIPULATION
 
 /**
  * Updates the state of an item object based on its expiry date and shelf life
@@ -111,22 +106,6 @@ export let updateChecks = item => {
 	item.checks++;
 };
 
-//#endregion
-
-//#region VARIABLE FORMATTING
-
-/**
- * Returns a 0 padded number. The length of the number is configurable
- * @param {number} num - the number to be 0 padded
- * @param {number} [length=3] - length of the final 0 padded number, equals to the number of digits + zero padding
- * @return {string} the final 0 padded number
- */
-
-let padNumber = (num, length = 3) => num.toString().padStart(length, "0");
-
-//#endregion
-
-//#region OUTPUT
 /**
  * 
  * @param {*} itemArray 
@@ -162,30 +141,30 @@ let createTable = (itemArray, node) => {
 	thead.appendChild(tableRowThead);
 	table.appendChild(thead);
 
-	itemArray.forEach(e => {
+	itemArray.forEach(item => {
 		let tableRowItem = document.createElement("tr");
 
 		let thIdElement = document.createElement("th");
-		thIdElement.textContent = e.id;
+		thIdElement.textContent = item.id;
 		tableRowItem.appendChild(thIdElement);
 
 		let thNameElement = document.createElement("th");
-		thNameElement.textContent = e.name;
+		thNameElement.textContent = item.name;
 		tableRowItem.appendChild(thNameElement);
 
 		let thExpiryEement = document.createElement("th");
-		thExpiryEement.textContent = e.expiry.toLocaleDateString(cnf.locale, { day: cnf.dayFormat}, {month: cnf.monthFormat });
+		thExpiryEement.textContent = item.expiry.toLocaleDateString();
 		tableRowItem.appendChild(thExpiryEement);
 
 		let thChecksEement = document.createElement("th");
-		thChecksEement.textContent = e.checks;
+		thChecksEement.textContent = item.checks;
 		tableRowItem.appendChild(thChecksEement);
 
 		let thStateEement = document.createElement("th");
-		thStateEement.textContent = e.state;
+		thStateEement.textContent = item.state;
 		tableRowItem.appendChild(thStateEement);
 
-		switch(e.state) {
+		switch(item.state) {
 			case "New":
 				tableRowItem.classList.add("green");
 					break;
@@ -206,10 +185,7 @@ let createTable = (itemArray, node) => {
 
 	table.appendChild(tbody);
 	node.appendChild(table);
-
 }
-
-//#region UTILITIES
 
 /**
  * Checks if an item has a state of either "New" or "Valid"
@@ -230,7 +206,7 @@ export let addDays = (date, days) => {
 	return result;
 };
 /**
- * 
+ * Function print content into table
  * @param {*} itemArray 
  * @param {*} currentDate 
  * @param {*} sectionId 
@@ -247,7 +223,7 @@ export let printContent = (itemArray, currentDate, sectionId, nodeContent) => {
 
 	/* Create title with current date */
 	let title = document.createElement("h2");
-	title.textContent = `Date: ${currentDate.toLocaleDateString(cnf.locale, { day: cnf.dayFormat}, {month: cnf.monthFormat })}`;
+	title.textContent = `Date: ${currentDate.toLocaleDateString()}`;
 	sectionContent.appendChild(title);
 
 	createTable(itemArray, sectionContent);
@@ -290,4 +266,21 @@ export let printContent = (itemArray, currentDate, sectionId, nodeContent) => {
 
 	nodeContent.appendChild(sectionContent);
 };
-//#endregion
+
+export let openCloseMenu = () => {
+	let mainContainer = document.getElementById("main-container");
+	let buttonContainer = document.getElementById("form-button-container")
+	let button = document.getElementById("setting-btn");
+	if (mainContainer.className == "container" && buttonContainer.className == "container") {
+	  mainContainer.className += "-open";  
+	  buttonContainer.className += "-open-btn";  
+	} else {
+	  mainContainer.className = "container";  
+	  buttonContainer.className = "container";  
+	}
+	if (button.className == "setting-btn") {
+	  button.className += "-open";
+	} else {
+	  button.className = "setting-btn";
+	}
+  };

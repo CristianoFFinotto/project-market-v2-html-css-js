@@ -104,7 +104,6 @@ button.setting-btn:active {
 
 .setting-btn-open {
   visibility: hidden;
-
 }
 .setting-btn-open::after {
   content: "X";
@@ -192,7 +191,7 @@ input:focus {
 
 table {
   width: 80%;
-  margin-left: 10%;
+  margin: 0 auto;
   border: 2px solid black;
 }
 

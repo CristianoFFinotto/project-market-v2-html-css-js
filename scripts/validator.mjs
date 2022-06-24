@@ -23,7 +23,7 @@ export function checkStartDate(input, e, maxLenght, regex, inputs, save) {
 		input.classList.add('error-input');
 	}
 	
-	if(inputValue.length === maxLenght || inputValue.length === maxLenght - 1 || inputValue.length === maxLenght - 2){
+	if(inputValue.length === maxLenght){
 		if(inputValue.match(regex)){
 			if(!input.classList.contains('valid-input')){
 				input.classList.add('valid-input');
@@ -44,7 +44,7 @@ export function checkStartDate(input, e, maxLenght, regex, inputs, save) {
  * @param {object} save - save input DOM
  */
 
-export function checkOtherInputs(input, e, maxLenght, regex, inputs, save) {
+export function checkOtherInputs(input, e, maxValue, inputs, save) {
 
     let inputValue = e.target.value;
 
@@ -52,15 +52,13 @@ export function checkOtherInputs(input, e, maxLenght, regex, inputs, save) {
 		input.classList.add('error-input');
 	}
 	
-	if(inputValue.length <= maxLenght){
-		if(inputValue.match(regex)){
-			if(!input.classList.contains('valid-input')){
-				input.classList.add('valid-input');
-			}
-			input.classList.remove('error-input');
+	if(inputValue <= maxValue && inputValue > 0){
+		if(!input.classList.contains('valid-input')){
+			input.classList.add('valid-input');
 		}
+		input.classList.remove('error-input');
 	}
-
+	
 	totalCheck(inputs, save);
 }
 
