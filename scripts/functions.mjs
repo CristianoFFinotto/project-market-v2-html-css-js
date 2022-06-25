@@ -10,7 +10,7 @@
  * - manipulate certain useful variables (increment a date, pad a string, pad a number)
  */
 
- /* import { create } from "core-js/core/object"; */
+/* import { create } from "core-js/core/object"; */
 import { config as cnf } from "./config.mjs";
 
 /**
@@ -24,9 +24,9 @@ let uniqueId = () => cnf.id++;
  * @param {object} itemNames - names of various possible items
  * @returns {string} the randomly selected item name
  */
-let generateName = itemNames => {
-	let randomIndex = Math.floor(Math.random() * itemNames.length);
-	return itemNames[randomIndex];
+let generateName = (itemNames) => {
+  let randomIndex = Math.floor(Math.random() * itemNames.length);
+  return itemNames[randomIndex];
 };
 
 /**
@@ -52,21 +52,21 @@ let generateExpiry = (start, end) => new Date(start.getTime() + Math.random() * 
  * @returns {object} - an array of item objects filled with data as per defined by its structure
  */
 export let generateItems = (numberOfItems, itemNames, endDate, startExpiry, currentDate, shelfLife) => {
-	let weeklyItems = [];
+  let weeklyItems = [];
 
-	for (let i = 0; i < numberOfItems; i++) {
-		let item = {
-			id: uniqueId(),
-			name: generateName(itemNames),
-			expiry: generateExpiry(startExpiry, endDate),
-			checks: 0,
-			state: "",
-		};
-		updateState(item, currentDate, shelfLife);
-		weeklyItems.push(item);
-	}
+  for (let i = 0; i < numberOfItems; i++) {
+    let item = {
+      id: uniqueId(),
+      name: generateName(itemNames),
+      expiry: generateExpiry(startExpiry, endDate),
+      checks: 0,
+      state: "",
+    };
+    updateState(item, currentDate, shelfLife);
+    weeklyItems.push(item);
+  }
 
-	return weeklyItems;
+  return weeklyItems;
 };
 
 /**
@@ -80,22 +80,22 @@ export let generateItems = (numberOfItems, itemNames, endDate, startExpiry, curr
  * @param {number} shelfLife - the shelf life of an item used to check if it's old
  */
 export let updateState = (item, currentDate, shelfLife) => {
-	if (item.checks === 0 && item.expiry > currentDate) {
-		item.state = "New"; 
-		return;
-	}
+  if (item.checks === 0 && item.expiry > currentDate) {
+    item.state = "New";
+    return;
+  }
 
-	if (item.expiry < currentDate) {
-		item.state = "Expired";
-		return;
-	}
+  if (item.expiry < currentDate) {
+    item.state = "Expired";
+    return;
+  }
 
-	if (item.checks > shelfLife) {
-		item.state = "Old";
-		return;
-	}
+  if (item.checks > shelfLife) {
+    item.state = "Old";
+    return;
+  }
 
-	item.state = "Valid";
+  item.state = "Valid";
 };
 
 /**
@@ -103,191 +103,144 @@ export let updateState = (item, currentDate, shelfLife) => {
  * @param {object} item - the item object to update
  * @param {number} item.checks - the number of checks (number of weeks on a shelf) an item has
  */
-export let updateChecks = item => {
-	item.checks++;
+export let updateChecks = (item) => {
+  item.checks++;
 };
 
 /**
- * 
- * @param {*} itemArray 
- * @param {*} node 
+ *
+ * @param {*} itemArray
+ * @param {*} node
  */
 let createTable = (itemArray, node) => {
-	/* create table with items */
-	let table = document.createElement("table");
-	let thead = document.createElement("thead");
-	let tbody = document.createElement("tbody");
-	let tableRowThead = document.createElement("tr");
-	
-	let thId = document.createElement("th");
-	thId.textContent = "Id";
-	tableRowThead.appendChild(thId);
+  /* create table with items */
+  let table = document.createElement("table");
+  table.classList.add("table");
+  table.classList.add("table-direction");
+  let thead = document.createElement("thead");
 
-	let thName = document.createElement("th");
-	thName.textContent = "Name";
-	tableRowThead.appendChild(thName);
-	let arrowButton = document.createElement("button");
-    arrowButton.addEventListener("click", () => sortTable(document.querySelector("table"), 1, true));
-    thName.appendChild(arrowButton);
+  let tbody = document.createElement("tbody");
+  let tableRowThead = document.createElement("tr");
 
-	let thExpiry = document.createElement("th");
-	thExpiry.textContent = "Expiry Date";
-	tableRowThead.appendChild(thExpiry);
+  let thId = document.createElement("th");
+  thId.textContent = "Id";
+  tableRowThead.appendChild(thId);
 
-	let thChecks = document.createElement("th");
-	thChecks.textContent = "Checks";
-	tableRowThead.appendChild(thChecks);
+  let thName = document.createElement("th");
+  thName.textContent = "Name";
+  tableRowThead.appendChild(thName);
+  let nameArrowButton = document.createElement("button");
+  nameArrowButton.addEventListener("click", () => sortTable(document.querySelector("table"), 1));
+  thName.appendChild(nameArrowButton);
 
-	let thState = document.createElement("th");
-	thState.textContent = "State";
-	tableRowThead.appendChild(thState);
+  let thExpiry = document.createElement("th");
+  thExpiry.textContent = "Expiry Date";
+  tableRowThead.appendChild(thExpiry);
+  let expiryArrowButton = document.createElement("button");
+  expiryArrowButton.addEventListener("click", () => sortTable(document.querySelector("table"), 2));
+  thExpiry.appendChild(expiryArrowButton);
 
-	thead.appendChild(tableRowThead);
-	table.appendChild(thead);
+  let thChecks = document.createElement("th");
+  thChecks.textContent = "Checks";
+  tableRowThead.appendChild(thChecks);
 
-	itemArray.forEach(item => {
-		let tableRowItem = document.createElement("tr");
+  let thState = document.createElement("th");
+  thState.textContent = "State";
+  tableRowThead.appendChild(thState);
 
-		let thIdElement = document.createElement("td");
-		thIdElement.textContent = item.id;
-		tableRowItem.appendChild(thIdElement);
+  thead.appendChild(tableRowThead);
+  table.appendChild(thead);
 
-		let thNameElement = document.createElement("td");
-		thNameElement.textContent = item.name;
-		tableRowItem.appendChild(thNameElement);
+  itemArray.forEach((item) => {
+    let tableRowItem = document.createElement("tr");
 
-		let thExpiryEement = document.createElement("td");
-		thExpiryEement.textContent = item.expiry.toLocaleDateString();
-		tableRowItem.appendChild(thExpiryEement);
+    let thIdElement = document.createElement("td");
+    thIdElement.textContent = item.id;
+    tableRowItem.appendChild(thIdElement);
 
-		let thChecksEement = document.createElement("td");
-		thChecksEement.textContent = item.checks;
-		tableRowItem.appendChild(thChecksEement);
+    let thNameElement = document.createElement("td");
+    thNameElement.textContent = item.name;
+    tableRowItem.appendChild(thNameElement);
 
-		let thStateEement = document.createElement("td");
-		thStateEement.textContent = item.state;
-		tableRowItem.appendChild(thStateEement);
+    let thExpiryEement = document.createElement("td");
+    thExpiryEement.textContent = item.expiry.toLocaleDateString();
+    tableRowItem.appendChild(thExpiryEement);
 
-		switch(item.state) {
-			case "New":
-				tableRowItem.classList.add("green");
-					break;
-				case "Valid":
-					tableRowItem.classList.add("yellow");
-					break;
-				case "Old":
-					tableRowItem.classList.add("orange");
-					break;
-				case "Expired":
-					tableRowItem.classList.add("red");
-					break;
-					default: 
-					tableRowItem.classList.add("transparent");
-		 }
-		tbody.appendChild(tableRowItem);
+    let thChecksEement = document.createElement("td");
+    thChecksEement.textContent = item.checks;
+    tableRowItem.appendChild(thChecksEement);
+
+    let thStateEement = document.createElement("td");
+    thStateEement.textContent = item.state;
+    tableRowItem.appendChild(thStateEement);
+
+    switch (item.state) {
+      case "New":
+        tableRowItem.classList.add("green");
+        break;
+      case "Valid":
+        tableRowItem.classList.add("yellow");
+        break;
+      case "Old":
+        tableRowItem.classList.add("orange");
+        break;
+      case "Expired":
+        tableRowItem.classList.add("red");
+        break;
+      default:
+        tableRowItem.classList.add("transparent");
+    }
+    tbody.appendChild(tableRowItem);
+  });
+
+  table.appendChild(tbody);
+  node.appendChild(table);
+};
+
+
+export let sortTable = (table, column, asc = true) => {
+  let direction = asc ? 1 : -1;
+  const tableBody = table.tBodies[0];
+  let tableRows = Array.from(tableBody.querySelectorAll("tr"));
+  console.log(tableRows);
+
+  let sortedRows = tableRows.sort((a, b) => {
+    let aColumn = a.querySelector(`td:nth-child(${column + 1})`).textContent.trim();
+    let bColumn = b.querySelector(`td:nth-child(${column + 1})`).textContent.trim();
+
+    return aColumn > bColumn ? (1 * direction) : (-1 * direction);
+  });
+
+  tableBody.append(...sortedRows);
+
+/*   while (tableBody.firstChild) {
+    tableBody.removeChild(tableBody.firstChild);
+  } */
+
+ 
+
+/*   table.querySelectorAll("th").forEach(th => th.classList.remove("th-direction-asc", "th-direction-desc"));
+  table.querySelector(`th:nth-child(${ column + 1 })`).classList.toggle("th-direction-asc", asc);
+  table.querySelector(`th:nth-child(${ column + 1 })`).classList.toggle("th-direction-desc", !asc);
+ */
+};
+
+/* document.querySelectorAll(".table-direction th").forEach(tableHeadElement => {
+	tableHeadElement.addEventListener("click", () => {
+		let tableElement = tableHeadElement.parentElement.parentElement.parentElement;
+		let tableHeadIndex = Array.prototype.indexOf.call(tableHeadElement.parentElement.children.tableHeadElement);
+		let currentDirection = tableHeadElement.classList.contains("th-direction-asc");
+
+		sortTable(tableElement, tableHeadIndex, !currentDirection);
 	})
-
-	table.appendChild(tbody);
-	node.appendChild(table);
-}
-
-
-let sortTable = (table, column, asc = true) => {
-	let direction = asc ? 1 : -1;
-	let tableBody = table.tBodies[0];
-	let tableRows = Array.from(tableBody.querySelectorAll("tr"));
-
-
-	let sortedRows = tableRows.sort((a, b) => {
-		console.log(a);
-		console.log(b);
-		let aColumn = a.querySelector(`td:nth-child(${column + 1})`).textContent.trim();
-		let bColumn = b.querySelector(`td:nth-child(${column + 1})`).textContent.trim();
-		
-		return aColumn > bColumn ? (1 * direction) : (-1 * direction);
-	});
-	/* console.log(sortedRows) */
-
-	while (tableBody.firstChild) {
-		tableBody.removeChild(tableBody.firstChild);
-	}
-
-	tableBody.append(...sortedRows);
-}
-
-/* function orderElement(a, b) {
-	if ( a.name < b.name) {
-		return -1
-	} 
-	if ( a.name > b.name) {
-		return 1;
-	} 
-	return 0;
-  }
-
-let sortTable = (items) => {
-	let tbody = document.getElementsByTagName("tbody");
-	let tableData = document.querySelectorAll("td");
-	for (let i = 0 ; i < tableData.length ; ++i) {
-	  tableData[i].remove();
-	  items.sort(orderElement)
-	}
-	console.log(items);
-	createTable(items, sectionContent);
-} */
-/* 	items.forEach(item => {
-		let tableRowItem = document.createElement("tr");
-
-		let thIdElement = document.createElement("td");
-		thIdElement.textContent = item.id;
-		tableRowItem.appendChild(thIdElement);
-
-		let thNameElement = document.createElement("td");
-		thNameElement.textContent = item.name;
-		tableRowItem.appendChild(thNameElement);
-
-		let thExpiryEement = document.createElement("td");
-		thExpiryEement.textContent = item.expiry.toLocaleDateString();
-		tableRowItem.appendChild(thExpiryEement);
-
-		let thChecksEement = document.createElement("td");
-		thChecksEement.textContent = item.checks;
-		tableRowItem.appendChild(thChecksEement);
-
-		let thStateEement = document.createElement("td");
-		thStateEement.textContent = item.state;
-		tableRowItem.appendChild(thStateEement);
-
-		switch(item.state) {
-			case "New":
-				tableRowItem.classList.add("green");
-					break;
-				case "Valid":
-					tableRowItem.classList.add("yellow");
-					break;
-				case "Old":
-					tableRowItem.classList.add("orange");
-					break;
-				case "Expired":
-					tableRowItem.classList.add("red");
-					break;
-					default: 
-					tableRowItem.classList.add("transparent");
-		 }
-		tbody.appendChild(tableRowItem);
-	})
-
-	table.appendChild(tbody);
-	node.appendChild(table);
-} */
-  
+}) */
 
 /**
  * Checks if an item has a state of either "New" or "Valid"
  * @param {object} item - the item object to check
  * @returns {boolean} true if item.state is "New" or "Valid", false otherwise
  */
-export let checkItem = item => item.state === "New" || item.state === "Valid";
+export let checkItem = (item) => item.state === "New" || item.state === "Valid";
 
 /**
  * Adds any amount of days to a date object and returns the result
@@ -296,98 +249,96 @@ export let checkItem = item => item.state === "New" || item.state === "Valid";
  * @returns {Date} the date after the days have been added
  */
 export let addDays = (date, days) => {
-	let result = new Date(date);
-	result.setDate(result.getDate() + days);
-	return result;
+  let result = new Date(date);
+  result.setDate(result.getDate() + days);
+  return result;
 };
 /**
  * Function print content into table
- * @param {*} itemArray 
- * @param {*} currentDate 
- * @param {*} sectionId 
- * @param {*} nodeContent 
+ * @param {*} itemArray
+ * @param {*} currentDate
+ * @param {*} sectionId
+ * @param {*} nodeContent
  */
 export let printContent = (itemArray, currentDate, sectionId, nodeContent) => {
+  let sectionContent = document.createElement("div");
+  sectionContent.id = sectionId;
 
-	let sectionContent = document.createElement("div");
-	sectionContent.id = sectionId;
+  if (sectionContent.id < cnf.weeksRuntime) {
+    sectionContent.classList.add("d-none");
+  }
 
-	if(sectionContent.id < cnf.weeksRuntime){
-		sectionContent.classList.add("d-none");
-	}
+  /* Create title with current date */
+  let title = document.createElement("h2");
+  title.textContent = `Date: ${currentDate.toLocaleDateString()}`;
+  title.classList.add("text-table");
+  sectionContent.appendChild(title);
 
-	/* Create title with current date */
-	let title = document.createElement("h2");
-	title.textContent = `Date: ${currentDate.toLocaleDateString()}`;
-	title.classList.add("text-table");
-	sectionContent.appendChild(title);
+  createTable(itemArray, sectionContent);
 
-	createTable(itemArray, sectionContent);
+  /* Container of subtitle and buttons */
+  let buttonDiv = document.createElement("div");
+  buttonDiv.classList.add("flex-container");
 
-	/* Container of subtitle and buttons */
-	let buttonDiv = document.createElement("div");
-	buttonDiv.classList.add("flex-container");
+  /* Table FIltered */
+  let filtered = document.createElement("h2");
+  filtered.textContent = "Filtered";
+  filtered.classList.add("text-table");
 
+  /* Add Buttons */
+  let buttonNext = document.createElement("button");
+  buttonNext.textContent = "Next";
+  buttonNext.classList.add("button");
+  buttonNext.onclick = function () {
+    let nextSection = document.getElementById(sectionId - 1);
 
-	/* Table FIltered */
-	let filtered = document.createElement("h2");
-	filtered.textContent = "Filtered";
-	filtered.classList.add("text-table");
-	
-	/* Add Buttons */
-	let buttonNext = document.createElement("button");
-	buttonNext.textContent = "Next";
-	buttonNext.classList.add("button");
-	buttonNext.onclick = function() {
-		let nextSection = document.getElementById(sectionId - 1);
+    sectionContent.classList.add("d-none");
+    nextSection.classList.remove("d-none");
+  };
+  if (sectionId === 1) {
+    buttonNext.classList.add("v-hidden");
+  }
 
-		sectionContent.classList.add("d-none");
-		nextSection.classList.remove("d-none")
-	}
-	if(sectionId === 1){
-	   buttonNext.classList.add("v-hidden");
-	}
+  let buttonPrevious = document.createElement("button");
+  buttonPrevious.textContent = "Previous";
+  buttonPrevious.classList.add("button");
+  buttonPrevious.onclick = function () {
+    if (sectionId + 1 <= cnf.weeksRuntime) {
+      let previousSection = document.getElementById(sectionId + 1);
 
-	let buttonPrevious = document.createElement("button");
-	buttonPrevious.textContent = "Previous";
-	buttonPrevious.classList.add("button");
-	buttonPrevious.onclick = function() {
-		if(sectionId + 1 <= cnf.weeksRuntime){
-		let previousSection = document.getElementById(sectionId + 1);
+      sectionContent.classList.add("d-none");
+      previousSection.classList.remove("d-none");
+    }
+  };
+  if (sectionId === cnf.weeksRuntime) {
+    buttonPrevious.classList.add("v-hidden");
+  }
 
-		sectionContent.classList.add("d-none");
-		previousSection.classList.remove("d-none");
-		}
-	}
-	if(sectionId === cnf.weeksRuntime){
-	   buttonPrevious.classList.add("v-hidden");
-	}
+  buttonDiv.appendChild(buttonPrevious);
+  buttonDiv.appendChild(filtered);
+  buttonDiv.appendChild(buttonNext);
 
-	buttonDiv.appendChild(buttonPrevious);
-	buttonDiv.appendChild(filtered);
-	buttonDiv.appendChild(buttonNext);
+  sectionContent.appendChild(buttonDiv);
 
-	sectionContent.appendChild(buttonDiv);
+  createTable(itemArray.filter(checkItem), sectionContent);
 
-	createTable(itemArray.filter(checkItem), sectionContent);
-
-	nodeContent.appendChild(sectionContent);
+  nodeContent.appendChild(sectionContent);
 };
 
 export let openCloseMenu = () => {
-	let mainContainer = document.getElementById("main-container");
-	let buttonContainer = document.getElementById("form-button-container")
-	let button = document.getElementById("setting-btn");
-	if (mainContainer.className == "container" && buttonContainer.className == "container") {
-	  mainContainer.className += "-open";  
-	  buttonContainer.className += "-open-btn";  
-	} else {
-	  mainContainer.className = "container";  
-	  buttonContainer.className = "container";  
-	}
-	if (button.className == "setting-btn") {
-	  button.className += "-open";
-	} else {
-	  button.className = "setting-btn";
-	}
-  };
+  let mainContainer = document.getElementById("main-container");
+  let buttonContainer = document.getElementById("form-button-container");
+  let button = document.getElementById("setting-btn");
+  if (mainContainer.className == "container" && buttonContainer.className == "container") {
+    mainContainer.className += "-open";
+    buttonContainer.className += "-open-btn";
+  } else {
+    mainContainer.className = "container";
+    buttonContainer.className = "container";
+  }
+  if (button.className == "setting-btn") {
+    button.className += "-open";
+  } else {
+    button.className = "setting-btn";
+  }
+};
