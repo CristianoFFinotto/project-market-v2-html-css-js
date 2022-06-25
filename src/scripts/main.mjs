@@ -11,6 +11,9 @@
  import * as fn from "./functions.mjs"; //main functions used to run the program
  import { itemNames } from "./itemsNames.mjs"; //array with a list of all possible item names
  import * as validator from "./validator.mjs";
+ import reset from "../styles/reset.css";
+ import css from "../styles/style.css";
+
 
 /********************** Taking DOM node **********************/
 
