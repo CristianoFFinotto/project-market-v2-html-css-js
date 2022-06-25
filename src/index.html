@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="HTML of our Javascript Project" />
+  <meta name="author" content="Cristiano Finotto, Paolo Gippa, Davide Murroni, Simone Sporeni" />
+  <title>Market Project</title>
+  <link rel="stylesheet" type="text/css" href="./styles/reset.css" />
+  <link rel="stylesheet" type="text/css" href="./styles/style.css" />
+</head>
+
+<body>
+  <header>
+    <figure>
+      <img class="header-img" src="./img/logo-market-inventory-system.jpg" alt="logo-market-inventory-system" />
+    </figure>
+    <h1>Market Inventory System</h1>
+  </header>
+  <main>
+
+    <form action="#panel">
+      <div class="button-container">
+        <button id="setting-btn" class="setting-btn" type="submit">
+          ⚙️
+        </button>
+      </div>
+    </form>
+
+    <form id="panel">
+      <div class="container" id="main-container">
+        <h2 class="form-heading">Set Your Preferences</h2>
+        <div class="form-container">
+          <label for="start-generator-product">Start generator product</label><br />
+          <input type="text" id="start-generator-product" placeholder="MM/DD/YYYY" />
+        </div>
+        <div class="form-container">
+          <label for="start-date">Start Date</label><br />
+          <input type="text" id="start-date" placeholder="MM/DD/YYYY" />
+        </div>
+        <div class="form-container">
+          <label for="weeks">Number of Weeks</label>
+          <input type="number" id="weeks" placeholder="max 99" />
+        </div>
+        <div class="form-container">
+          <label for="weekly-products">Weekly products</label>
+          <input type="number" id="weekly-products" placeholder="max 20" />
+        </div>
+        <div class="form-container">
+          <label for="days-in-week">Days in a week</label>
+          <input type="number" id="days-in-week" placeholder="max 9" />
+        </div>
+        <div class="form-container" id="last-container">
+          <label for="check-threshold">Check Threshold</label>
+          <input type="number" id="check-threshold" placeholder="max 9" />
+        </div>
+      </div>
+      <div class="container" id="form-button-container">
+        <input type="reset" id="reset" value="Reset" />
+        <input type="submit" id="save" value="Save" disabled />
+        <span class="line-breaker"></span>
+      </div>
+    </form>
+    <section id="content">
+      
+    </section>
+  </main>
+  <script type="module" src="./scripts/main.mjs"></script>
+</body>
+</html>
+

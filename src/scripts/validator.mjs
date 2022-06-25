@@ -3,7 +3,7 @@
  * @authors Davide Murroni, Simone Sporeni, Paolo Gippa, Cristiano Francesco Finotto
  * file used to validate inputs form
  *
- * rhis file check inputs
+ * this file check inputs
  */
 
 /**Function validate only startDate
@@ -44,7 +44,8 @@ export function checkStartDate(input, e, maxLenght, regex, inputs, save) {
  * @param {object} save - save input DOM
  */
 
-export function checkOtherInputs(input, e, maxValue, inputs, save) {
+export function 
+checkOtherInputs(input, e, maxValue, inputs, save) {
 
     let inputValue = e.target.value;
 
