@@ -13,8 +13,8 @@
  import { config as cnf } from "./config.mjs";
 
 /**
- * Returns a global id variable and increments it by 1
- * @returns {number} the global id variable before incrementing it
+ * Returns a config id variable and increments it by 1
+ * @returns {number} the config id variable before incrementing it
  */
 
 function uniqueId() {
@@ -113,21 +113,45 @@ export function updateState(item, currentDate, shelfLife){
 export function updateChecks(item) {
 	item.checks++;
 }
+/**
+ * Checks if an item has a state of either "New" or "Valid"
+ * @param {object} item - the item object to check
+ * @returns {boolean} true if item.state is "New" or "Valid", false otherwise
+ */
+
+ export function checkItem (item) {
+	return item.state === "New" || item.state === "Valid";
+}
 
 /**
+ * Adds any amount of days to a date object and returns the result
+ * @param {Date} - the date object to increment
+ * @param {number} - the number of days to increment the date by
+ * @returns {Date} the date after the days have been added
+ */
+
+export function addDays(date, days){
+	let result = new Date(date);
+	result.setDate(result.getDate() + days);
+	return result;
+}
+
+/* DOM function  */
+/**
  * Function create DOM table
- * @param {*} itemArray - array of product
- * @param {*} node - DOM node where append table
+ * @param {Array} itemArray - array of product
+ * @param {Node} node - DOM node where append table
  */
 
 function createTable(itemArray, node) {
 
-	/* create table with items */
+	/* Create table with items */
 	let table = document.createElement("table");
 	let thead = document.createElement("thead");
 	let tbody = document.createElement("tbody");
 	let tableRowThead = document.createElement("tr");
 	
+	/* Create thead elements */
 	let thId = document.createElement("th");
 	thId.textContent = "Id";
 	tableRowThead.appendChild(thId);
@@ -151,6 +175,7 @@ function createTable(itemArray, node) {
 	thead.appendChild(tableRowThead);
 	table.appendChild(thead);
 
+	/* Loop on array of items and generate the elements of tbody */
 	itemArray.forEach(item => {
 		let tableRowItem = document.createElement("tr");
 
@@ -174,6 +199,7 @@ function createTable(itemArray, node) {
 		thStateEement.textContent = item.state;
 		tableRowItem.appendChild(thStateEement);
 
+		/* Add background-color class based on the state of the item */
 		switch(item.state) {
 			case "New":
 				tableRowItem.classList.add("green");
@@ -198,34 +224,11 @@ function createTable(itemArray, node) {
 }
 
 /**
- * Checks if an item has a state of either "New" or "Valid"
- * @param {object} item - the item object to check
- * @returns {boolean} true if item.state is "New" or "Valid", false otherwise
- */
-
-export function checkItem (item) {
-	return item.state === "New" || item.state === "Valid";
-}
-
-/**
- * Adds any amount of days to a date object and returns the result
- * @param {Date} - the date object to increment
- * @param {number} - the number of days to increment the date by
- * @returns {Date} the date after the days have been added
- */
-
-export function addDays(date, days){
-	let result = new Date(date);
-	result.setDate(result.getDate() + days);
-	return result;
-}
-
-/**
- * Function print content into table
- * @param {*} itemArray - array of product
- * @param {*} currentDate - actual date
- * @param {*} sectionId 
- * @param {*} nodeContent 
+ * Function that print all table(included filtered) for each week.
+ * @param {Array} itemArray - Array of product.
+ * @param {Date} currentDate - Actual date.
+ * @param {Number} sectionId - A Number for the id of section increased by one for each week.
+ * @param {Node} nodeContent - The Node to insert all content table.
  */
 
 export function printContent(itemArray, currentDate, sectionId, nodeContent) {
@@ -298,7 +301,6 @@ export function printContent(itemArray, currentDate, sectionId, nodeContent) {
 /**
  * Function open close settings panel
  */
-
 export function openCloseMenu() {
 	let mainContainer = document.getElementById("main-container");
 	let buttonContainer = document.getElementById("form-button-container")
