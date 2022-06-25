@@ -1,324 +1,376 @@
 /* This is the main stylesheet of this project */
 
+
 /* Universal selector style */
+
 *,
 *::before,
 *::after {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
+
 
 /* body */
 
 html,
 body {
-  font-family: Verdana, sans-serif;
+    font-family: Verdana, sans-serif;
 }
 
 
 /* typography style*/
 
 h1 {
-  font-size: 28px;
-  padding: 2.5% 0% 0% 0%;
-  color: white;
-
+    font-size: 28px;
+    padding: 2.5% 0% 0% 0%;
+    color: white;
 }
 
 h2.form-heading {
-  width: 100vw;
-  text-align: center;
-  font-weight: 600;
-  font-size: 24px;
-  margin: 3%;
+    width: 100vw;
+    text-align: center;
+    font-weight: 600;
+    font-size: 24px;
+    margin: 3%;
 }
+
 
 /* header */
 
 header {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  padding: 0.5rem 1rem;
-  text-align: center;
-  border-bottom: 1px solid #d2d3db;
-  background-color: #5CA09F;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 0.5rem 1rem;
+    text-align: center;
+    border-bottom: 1px solid #d2d3db;
+    background-color: #5CA09F;
 }
 
 .header-img {
-  height: 10vh;
-  width: 10vw;
+    height: 10vh;
+    width: 10vw;
 }
+
 
 /* setting button style */
 
 .button-container {
-  position: fixed;
-  bottom: 0;
-  height: 10vh;
-  width: 100%;
-  background-color: #283b43;
-  display: flex;
-  justify-content: center;
-  z-index: 1;
+    position: fixed;
+    bottom: 0;
+    height: 10vh;
+    width: 100%;
+    background-color: #283b43;
+    display: flex;
+    justify-content: center;
+    z-index: 1;
 }
 
 button.setting-btn {
-  font-size: 24px;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
+    font-size: 24px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
 }
+
 
 /* button interaction */
 
 button.setting-btn:hover {
-  animation: rotation 2s infinite linear;
+    animation: rotation 2s infinite linear;
 }
 
 button.setting-btn:active {
-  animation: none;
+    animation: none;
 }
+
 
 /* button animation */
 
 @keyframes rotation {
-  50% {
-    transform: rotate(180deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
+    50% {
+        transform: rotate(180deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 
 /* button transform */
 
 .setting-btn-open {
-  visibility: hidden;
+    visibility: hidden;
 }
 
 .setting-btn-open::after {
-  content: "X";
-  position: fixed;
-  bottom: 1vh;
-  right: 46.5%;
-  left: 46.5%;
-  width: 7%;
-  height: 9%;
-  font-size: 22px;
-  padding: 13px 5px;
-  visibility: visible;
-  border-radius: 25%;
-  background-color: #283b43;
-  color: white;
+    content: "X";
+    position: fixed;
+    bottom: 1vh;
+    right: 46.5%;
+    left: 46.5%;
+    width: 7%;
+    height: 9%;
+    font-size: 22px;
+    padding: 13px 5px;
+    visibility: visible;
+    border-radius: 25%;
+    background-color: #283b43;
+    color: white;
 }
 
 .container {
-  display: none;
-  position: fixed;
-  bottom: 0;
+    display: none;
+    position: fixed;
+    bottom: 0;
 }
 
 .container-open {
-  position: sticky;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-around;
+    position: sticky;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
 }
+
 
 /* form style */
 
 .form-container {
-  width: 45%;
+    width: 45%;
 }
 
 label {
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
-  /*   margin-left: 3%;
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+    /*   margin-left: 3%;
   margin-top: 3%; */
-  font-size: 0.8em;
+    font-size: 0.8em;
 }
 
 input {
-  width: 90%;
-  height: 5vh;
-  margin-bottom: 17%;
-  border-bottom: 1px solid black;
-  border-top: none;
-  border-right: none;
-  border-left: none;
-  font-size: 0.7em;
+    width: 90%;
+    height: 5vh;
+    margin-bottom: 17%;
+    border-bottom: 1px solid black;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    font-size: 0.7em;
 }
 
 input[type="reset"],
 input[type="submit"] {
-  position: relative;
-  top: 4%;
-  width: 15%;
-  left: 30%;
-  right: 30%;
+    position: relative;
+    top: 4%;
+    width: 15%;
+    left: 30%;
+    right: 30%;
 }
 
 .line-breaker {
-  width: 80%;
-  height: 1vh;
-  background-color: black;
+    width: 80%;
+    height: 1vh;
+    background-color: black;
 }
 
+
 /* form interaction */
+
 input:focus {
-  outline: none;
+    outline: none;
 }
+
 
 /* table */
 
 table {
-  width: 80%;
-  margin: 0 auto;
-  border: 2px solid black;
+    width: 80%;
+    margin: 0 auto;
+    border: 2px solid black;
 }
 
 thead {
-  color: white;
-  background-color: #283b43;
-  line-height: 40px;
+    color: white;
+    background-color: #283b43;
+    line-height: 40px;
 }
 
 th:nth-of-type(3) {
-  width: 25%;
+    width: 25%;
 }
 
 th {
-  border: 2px solid black;
-  width: 20%;
-  height: 5vh;
-  line-height: 5vh;
+    border: 2px solid black;
+    width: 20%;
+    height: 5vh;
+    line-height: 5vh;
 }
 
 #content {
-  padding: 30px 0 100px 0;
-  background-color: #5ca09f94;
-
+    padding: 30px 0 100px 0;
+    background-color: #5ca09f94;
 }
+
 
 /* Javascript DOM manipulation */
 
+
 /* classes added to change the background color of the state th based on the item state */
 
-.green { 
-  background-color: lightgreen; /* new */
+.green {
+    background-color: lightgreen;
+    /* new */
 }
 
 .yellow {
-  background-color: lightyellow; /* valid */
+    background-color: lightyellow;
+    /* valid */
 }
 
 .orange {
-  background-color: lightsalmon; /* old */
+    background-color: lightsalmon;
+    /* old */
 }
 
 .red {
-  background-color: lightcoral; /* expired */
+    background-color: lightcoral;
+    /* expired */
 }
 
 .transparent {
-  background-color: transparent;
-  /* removed */
+    background-color: transparent;
+    /* removed */
 }
+
 
 /* Class for hide elements*/
+
 .d-none {
-  display: none;
+    display: none;
 }
+
 .v-hidden {
-  visibility: hidden;
+    visibility: hidden;
 }
+
 
 /* Style text table */
+
 .text-table {
-  text-align: center;
-  font-size: 2em;
-  margin: 20px 0;
-  text-transform: uppercase;
-  color: #283b43;
+    text-align: center;
+    font-size: 2em;
+    margin: 20px 0;
+    text-transform: uppercase;
+    color: #283b43;
 }
+
 
 /* Style button */
+
 .button {
-  padding: 5px 10px;
-  font-size: 0.7em;
-  border-radius: 20px;
-  background-image: linear-gradient(to right, #283b43, #5CA09F);
-  background-size: 200% auto;
-  color: white;
-  border: none;
-  cursor: pointer;
-  transition: background-position 0.8s;
-}
-.button:hover{
-  background-position: right center;
+    padding: 5px 10px;
+    font-size: 0.7em;
+    border-radius: 20px;
+    background-image: linear-gradient(to right, #283b43, #5CA09F);
+    background-size: 200% auto;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-position 0.8s;
 }
 
+.button:hover {
+    background-position: right center;
+}
+
+
 /* Flex display for positioning of buttons and subtitle */
+
 .flex-container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 }
 
 
 /* media query */
 
 .form-container>label::after {
-  content: "*";
-  color: red;
+    content: "*";
+    color: red;
 }
 
 .valid-input {
-  background-color: lightgreen;
+    background-color: lightgreen;
 }
 
 .error-input {
-  background-color: lightcoral;
+    background-color: lightcoral;
 }
+
 
 /* Small devices (landscape phones, 576px and up) */
+
 @media (min-width: 576px) {
-
-  .button {
-    padding: 10px 20px;
-    font-size: 1em;
-    border-radius: 20px;
-  }
+    .button {
+        padding: 10px 20px;
+        font-size: 1em;
+        border-radius: 20px;
+    }
 }
- 
-/* Medium devices (tablets, 768px and up) */
-@media (min-width: 768px) { 
-  #content{
-    padding: 30px 50px 100px 50px;
-  }
 
- }
+
+/* Medium devices (tablets, 768px and up) */
+
+@media (min-width: 768px) {
+    #content {
+        padding: 30px 50px 100px 50px;
+    }
+    .button {
+        padding: 10px 20px;
+        font-size: 1em;
+        border-radius: 20px;
+    }
+}
+
 
 /* Large devices (desktops, 992px and up) */
-@media (min-width: 992px) { 
-  #content {
-    padding: 30px 100px 100px 100px;
-  }
- }
+
+@media (min-width: 992px) {
+    #content {
+        padding: 30px 100px 100px 100px;
+    }
+    .button {
+        padding: 10px 20px;
+        font-size: 1em;
+        border-radius: 20px;
+    }
+}
+
 
 /* X-Large devices (large desktops, 1200px and up) */
-@media (min-width: 1200px) { 
-  #content {
-    padding: 30px 150px 100px 150px;
-  }
 
- }
+@media (min-width: 1200px) {
+    #content {
+        padding: 30px 150px 100px 150px;
+    }
+    .button {
+        padding: 10px 20px;
+        font-size: 1em;
+        border-radius: 20px;
+    }
+}
+
 
 /* XX-Large devices (larger desktops, 1400px and up) */
-@media (min-width: 1400px) { 
 
- } 
- 
+@media (min-width: 1400px) {
+    #content {
+        padding: 30px 170px 120px 170px;
+    }
+    .button {
+        padding: 10px 20px;
+        font-size: 1em;
+        border-radius: 20px;
+    }
+}
