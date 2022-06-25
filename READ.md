@@ -4,20 +4,20 @@ A command line program made in JavaScript used to output a weekly list of superm
 
 ---
 
--   [0-js-proj-01-expiry-list](#0-js-proj-01-expiry-list)
--   [Project Description](#project-description)
--   [Usage](#usage)
--   [Configuration and technical characteristics](#configuration-and-technical-characteristics)
--   [Files and project structure](#files-and-project-structure)
--   [Features delivered](#features-delivered)
--   [Bonuses delivered](#bonuses-delivered)
-    -   [Bonus 1](#bonus-1)
-    -   [Bonus 2](#bonus-2)
-    -   [Bonus 3](#bonus-3)
--   [Browser compatibility](#browser-compatibility)
--   [External resources](#external-resources)
--   [License and contact information](#license-and-contact-information)
--   [Authors](#authors)
+- [Expiry list javascript program](#expiry-list-javascript-program)
+  - [Project Description](#project-description)
+  - [Usage](#usage)
+  - [Configuration and technical characteristics](#configuration-and-technical-characteristics)
+  - [Files and project structure](#files-and-project-structure)
+  - [Features delivered](#features-delivered)
+  - [Bonuses delivered](#bonuses-delivered)
+    - [Bonus 1](#bonus-1)
+    - [Bonus 2](#bonus-2)
+    - [Bonus 3](#bonus-3)
+  - [Browser compatibility](#browser-compatibility)
+  - [External resources](#external-resources)
+  - [License and contact information](#license-and-contact-information)
+  - [Authors](#authors)
 
 ---
 
@@ -186,7 +186,7 @@ export let itemNames = [...]
 
     -   Done by using the function generateItems() in the main.mjs file. In the config.mjs file the user can set how many randomly generated items per week they wish to have.
 
--   ### Feature 4: The program starts from the current date plus startingOffset days and runs for weeksRuntime weeks
+-   ### Feature 4: The program starts from the current date plus startingOffset days and runs for weeksRuntime weeks  
 
     -   To clarify: The runtime of the program in real time seconds is determined by the second parameter of the setInterval() function in the main.mjs, multiplied by the value of weeksRuntime property of the config object in config.mjs. All of the properties of the config object that mention the word "day(s)","week(s)" are simply what helps us simulate the passage of days and weeks in the program, also with the aid of Date objects. This particular feature is implemented with the following lines of code in the main.mjs file.
 

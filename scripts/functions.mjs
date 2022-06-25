@@ -174,22 +174,7 @@ let createTable = (itemArray, node) => {
     thStateEement.textContent = item.state;
     tableRowItem.appendChild(thStateEement);
 
-    switch (item.state) {
-      case "New":
-        tableRowItem.classList.add("green");
-        break;
-      case "Valid":
-        tableRowItem.classList.add("yellow");
-        break;
-      case "Old":
-        tableRowItem.classList.add("orange");
-        break;
-      case "Expired":
-        tableRowItem.classList.add("red");
-        break;
-      default:
-        tableRowItem.classList.add("transparent");
-    }
+    
     tbody.appendChild(tableRowItem);
   });
 
