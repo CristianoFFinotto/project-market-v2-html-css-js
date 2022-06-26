@@ -32,7 +32,8 @@
     "webpack-dev-server": "^4.9.2"
   },
   "dependencies": {
-    "core-js": "^3.23.2"
+    "core-js": "^3.23.2",
+    "validator": "^13.7.0"
   },
   "keywords": []
 }

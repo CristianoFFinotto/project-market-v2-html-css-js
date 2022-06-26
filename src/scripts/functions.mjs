@@ -102,7 +102,7 @@ export function updateState(item, currentDate, shelfLife){
 	}
 
 	item.state = "Valid";
-};
+}
 
 /**
  * Updates the checks property of an item object incrementing it by one (should be called every week)
@@ -217,7 +217,7 @@ function createTable(itemArray, node) {
 					tableRowItem.classList.add("transparent");
 		 }
 		tbody.appendChild(tableRowItem);
-	})
+	});
 
 	table.appendChild(tbody);
 	node.appendChild(table);
@@ -266,8 +266,9 @@ export function printContent(itemArray, currentDate, sectionId, nodeContent) {
 		let nextSection = document.getElementById(sectionId - 1);
 
 		sectionContent.classList.add("d-none");
-		nextSection.classList.remove("d-none")
-	}
+		nextSection.classList.remove("d-none");
+	};
+	
 	if(sectionId === 1){
 	   buttonNext.classList.add("v-hidden");
 	}
@@ -282,7 +283,7 @@ export function printContent(itemArray, currentDate, sectionId, nodeContent) {
 		sectionContent.classList.add("d-none");
 		previousSection.classList.remove("d-none");
 		}
-	}
+	};
 	if(sectionId === cnf.weeksRuntime){
 	   buttonPrevious.classList.add("v-hidden");
 	}
@@ -296,14 +297,14 @@ export function printContent(itemArray, currentDate, sectionId, nodeContent) {
 	createTable(itemArray.filter(checkItem), sectionContent);
 
 	nodeContent.appendChild(sectionContent);
-};
+}
 
 /**
  * Function open close settings panel
  */
 export function openCloseMenu() {
 	let mainContainer = document.getElementById("main-container");
-	let buttonContainer = document.getElementById("form-button-container")
+	let buttonContainer = document.getElementById("form-button-container");
 	let button = document.getElementById("setting-btn");
 	if (mainContainer.className == "container" && buttonContainer.className == "container") {
 	  mainContainer.className += "-open";  

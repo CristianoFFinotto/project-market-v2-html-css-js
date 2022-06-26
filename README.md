@@ -127,9 +127,9 @@ We picked these decision with the aim of ensuring the best UX.
 #### Panel UX/UI technicalities
 
 The setting panel will open and close when the user interacts with it.This has been implement via Javascript and CSS,
-by setting a <code>display:none</code> to the panel HTML element container, so when the user click on the setting gear starts a Javascript event that modify the class of the container, substituting the <code>display:none</code> with a <code>display:flex</code> rule.
+by setting a <code>display: none</code> to the panel HTML element container, so when the user click on the setting gear starts a Javascript event that modify the class of the container, substituting the <code>display:none</code> with a <code>display: flex</code> rule.
 The mechanism to close the panel is the same. User also can close the panel clicking on the save button. After compiling all the inputs correctly.
-You can check this feature in the functions.mjs file. 
+You can check this feature in the functions.mjs file.
 
 #### Panel Validation
 
@@ -158,3 +158,35 @@ These functions check that the inputs respect the parameter of the setting panel
 
 
 ## Browser Compatibility
+
+## File Validation 
+
+All files have been validated:
+
+- For HTML files [HTML Validator](https://validator.w3.org/)
+- For CSS files [CSS Validator](https://jigsaw.w3.org/css-validator/)
+- For Json files [Json Validator](https://jsonformatter.curiousconcept.com/)
+
+
+## License and contact information
+
+[cristiano.finotto@edu.itspiemonte.it](cristiano.finotto@edu.itspiemonte.it)
+
+[paolo.gippa@edu.itspiemonte.it](paolo.gippa@edu.itspiemonte.it)
+
+[davide.murroni@edu.itspiemonte.it](davide.murroni@edu.itspiemonte.it)
+
+[simone.sporeni@edu.itspiemonte.it](simone.sporeni@edu.itspiemonte.it)
+
+
+[License]()
+
+---
+
+## Authors
+
+Nemanja Gajicic, Pietro Milanese, Jacopo Trompeo, Davide Murroni
+
+---
+
+[Back to top.](#expiry-list-javascript-program)
