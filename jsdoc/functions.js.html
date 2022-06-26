@@ -1,4 +1,32 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: functions.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: functions.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * @file functions.mjs
  * @authors Davide Murroni, Simone Sporeni, Paolo Gippa, Cristiano Francesco Finotto
  * File with our main utility functions.
@@ -10,11 +38,11 @@
  * - manipulate certain useful variables (increment a date, pad a string, pad a number)
  */
 
- import { config as cnf } from "./config.mjs";
+ import { config as cnf } from "./config.js";
 
 /**
- * Returns a global id variable and increments it by 1
- * @returns {number} the global id variable before incrementing it
+ * Returns a config id variable and increments it by 1
+ * @returns {number} the config id variable before incrementing it
  */
 
 function uniqueId() {
@@ -58,7 +86,7 @@ export function generateItems(numberOfItems, itemNames, startExpiry, endDate, cu
 
 	let weeklyItems = [];
 
-	for (let i = 0; i < numberOfItems; i++) {
+	for (let i = 0; i &lt; numberOfItems; i++) {
 		let item = {
 			id: uniqueId(),
 			name: generateName(itemNames),
@@ -86,12 +114,12 @@ export function generateItems(numberOfItems, itemNames, startExpiry, endDate, cu
 
 export function updateState(item, currentDate, shelfLife){
 
-	if (item.checks === 0 && item.expiry >= currentDate) {
+	if (item.checks === 0 &amp;&amp; item.expiry >= currentDate) {
 		item.state = "New"; 
 		return;
 	}
 
-	if (item.expiry < currentDate) {
+	if (item.expiry &lt; currentDate) {
 		item.state = "Expired";
 		return;
 	}
@@ -113,21 +141,45 @@ export function updateState(item, currentDate, shelfLife){
 export function updateChecks(item) {
 	item.checks++;
 }
+/**
+ * Checks if an item has a state of either "New" or "Valid"
+ * @param {object} item - the item object to check
+ * @returns {boolean} true if item.state is "New" or "Valid", false otherwise
+ */
+
+ export function checkItem (item) {
+	return item.state === "New" || item.state === "Valid";
+}
 
 /**
+ * Adds any amount of days to a date object and returns the result
+ * @param {Date} - the date object to increment
+ * @param {number} - the number of days to increment the date by
+ * @returns {Date} the date after the days have been added
+ */
+
+export function addDays(date, days){
+	let result = new Date(date);
+	result.setDate(result.getDate() + days);
+	return result;
+}
+
+/* DOM function  */
+/**
  * Function create DOM table
- * @param {*} itemArray - array of product
- * @param {*} node - DOM node where append table
+ * @param {Array} itemArray - array of product
+ * @param {Node} node - DOM node where append table
  */
 
 function createTable(itemArray, node) {
 
-	/* create table with items */
+	/* Create table with items */
 	let table = document.createElement("table");
 	let thead = document.createElement("thead");
 	let tbody = document.createElement("tbody");
 	let tableRowThead = document.createElement("tr");
 	
+	/* Create thead elements */
 	let thId = document.createElement("th");
 	thId.textContent = "Id";
 	tableRowThead.appendChild(thId);
@@ -151,6 +203,7 @@ function createTable(itemArray, node) {
 	thead.appendChild(tableRowThead);
 	table.appendChild(thead);
 
+	/* Loop on array of items and generate the elements of tbody */
 	itemArray.forEach(item => {
 		let tableRowItem = document.createElement("tr");
 
@@ -174,6 +227,7 @@ function createTable(itemArray, node) {
 		thStateEement.textContent = item.state;
 		tableRowItem.appendChild(thStateEement);
 
+		/* Add background-color class based on the state of the item */
 		switch(item.state) {
 			case "New":
 				tableRowItem.classList.add("green");
@@ -198,34 +252,11 @@ function createTable(itemArray, node) {
 }
 
 /**
- * Checks if an item has a state of either "New" or "Valid"
- * @param {object} item - the item object to check
- * @returns {boolean} true if item.state is "New" or "Valid", false otherwise
- */
-
-export function checkItem (item) {
-	return item.state === "New" || item.state === "Valid";
-}
-
-/**
- * Adds any amount of days to a date object and returns the result
- * @param {Date} - the date object to increment
- * @param {number} - the number of days to increment the date by
- * @returns {Date} the date after the days have been added
- */
-
-export function addDays(date, days){
-	let result = new Date(date);
-	result.setDate(result.getDate() + days);
-	return result;
-}
-
-/**
- * Function print content into table
- * @param {*} itemArray - array of product
- * @param {*} currentDate - actual date
- * @param {*} sectionId 
- * @param {*} nodeContent 
+ * Function that print all table(included filtered) for each week.
+ * @param {Array} itemArray - Array of product.
+ * @param {Date} currentDate - Actual date.
+ * @param {Number} sectionId - A Number for the id of section increased by one for each week.
+ * @param {Node} nodeContent - The Node to insert all content table.
  */
 
 export function printContent(itemArray, currentDate, sectionId, nodeContent) {
@@ -233,7 +264,7 @@ export function printContent(itemArray, currentDate, sectionId, nodeContent) {
 	let sectionContent = document.createElement("div");
 	sectionContent.id = sectionId;
 
-	if(sectionContent.id < cnf.weeksRuntime){
+	if(sectionContent.id &lt; cnf.weeksRuntime){
 		sectionContent.classList.add("d-none");
 	}
 
@@ -273,7 +304,7 @@ export function printContent(itemArray, currentDate, sectionId, nodeContent) {
 	buttonPrevious.textContent = "Previous";
 	buttonPrevious.classList.add("button");
 	buttonPrevious.onclick = function() {
-		if(sectionId + 1 <= cnf.weeksRuntime){
+		if(sectionId + 1 &lt;= cnf.weeksRuntime){
 		let previousSection = document.getElementById(sectionId + 1);
 
 		sectionContent.classList.add("d-none");
@@ -298,12 +329,11 @@ export function printContent(itemArray, currentDate, sectionId, nodeContent) {
 /**
  * Function open close settings panel
  */
-
 export function openCloseMenu() {
 	let mainContainer = document.getElementById("main-container");
 	let buttonContainer = document.getElementById("form-button-container")
 	let button = document.getElementById("setting-btn");
-	if (mainContainer.className == "container" && buttonContainer.className == "container") {
+	if (mainContainer.className == "container" &amp;&amp; buttonContainer.className == "container") {
 	  mainContainer.className += "-open";  
 	  buttonContainer.className += "-open-btn";  
 	} else {
@@ -316,3 +346,26 @@ export function openCloseMenu() {
 	  button.className = "setting-btn";
 	}
 }
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addDays">addDays</a></li><li><a href="global.html#checkItem">checkItem</a></li><li><a href="global.html#checkOtherInputs">checkOtherInputs</a></li><li><a href="global.html#checkStartDate">checkStartDate</a></li><li><a href="global.html#config">config</a></li><li><a href="global.html#createTable">createTable</a></li><li><a href="global.html#generateExpiry">generateExpiry</a></li><li><a href="global.html#generateItems">generateItems</a></li><li><a href="global.html#generateName">generateName</a></li><li><a href="global.html#openCloseMenu">openCloseMenu</a></li><li><a href="global.html#printContent">printContent</a></li><li><a href="global.html#totalCheck">totalCheck</a></li><li><a href="global.html#uniqueId">uniqueId</a></li><li><a href="global.html#updateChecks">updateChecks</a></li><li><a href="global.html#updateState">updateState</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Sun Jun 26 2022 14:20:59 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

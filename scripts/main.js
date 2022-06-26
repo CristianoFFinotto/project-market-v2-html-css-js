@@ -6,11 +6,14 @@
  * This file imports functions and variables from the other files in the project
  * and uses them to run the main program.
  */
-
- import { config as cnf } from "./config.mjs"; //configuration object
- import * as fn from "./functions.mjs"; //main functions used to run the program
- import { itemNames } from "./itemsNames.mjs"; //array with a list of all possible item names
- import * as validator from "./validator.mjs";
+ import { config as cnf } from "./config.js"; //configuration object
+ import * as fn from "./functions.js"; //main functions used to run the program
+ import { itemNames } from "./itemsNames.js"; //array with a list of all possible item names
+ import * as validator from "./validator.js";
+ /* webpack imports */
+ import '../img/logo-market-inventory-system.jpg';
+ import "../styles/reset.css";
+ import "../styles/style.css";
 
 /********************** Taking DOM node **********************/
 
