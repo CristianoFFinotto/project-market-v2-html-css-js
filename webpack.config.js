@@ -1,6 +1,5 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 module.exports = {
@@ -8,18 +7,22 @@ module.exports = {
     entry: './src/scripts/main.js',
     output: {
         path: path.resolve(__dirname, './public'),
-        filename: 'bundle.js'
+        filename: 'bundle.min.js'
     },
-    plugins: [
-        new HtmlWebpackPlugin({ template: './public/index.html' }),
-        new MiniCssExtractPlugin()
-    ],
 
+    plugins: [
+      new CssMinimizerPlugin(),
+      new MiniCssExtractPlugin({filename: 'main.min.css'}),
+    ],
+  
     module: {
         rules: [
             {
                 test: /\.css$/i,
-                use: [MiniCssExtractPlugin.loader, 'css-loader']
+                use: [
+                  MiniCssExtractPlugin.loader,
+                  'css-loader'
+                ],
             },
             {
                 test: /\.m?js$/,
@@ -51,19 +54,14 @@ module.exports = {
               },
         ]
     },
-    optimization: {
-        minimizer: [
-          // For webpack@5 you can use the `...` syntax to extend existing minimizers (i.e. `terser-webpack-plugin`), uncomment the next line
-          // `...`,
-          new CssMinimizerPlugin()
-        ],
-      },
-      plugins: [new MiniCssExtractPlugin()],
       devServer: {
         static: {
           directory: path.join(__dirname, 'public'),
         },
         compress: true,
         port: 9000,
+      },
+      optimization : {
+        minimize: true
       }
 };
