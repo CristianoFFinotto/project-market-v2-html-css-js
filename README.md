@@ -6,20 +6,24 @@ A project to manage the products of a supermarket inventory with a setting panel
 
 ``` MD
 .
-├── dist
-|     ├── index.html
-│     └── main.budle.js
-├── img 
-|     └── logo-market-inventory-system.jpg
+├── jsdoc
+|
+├── public
+|       ├── img
+|             └── logo-market-inventory-system.jpg
+│       └── main.budle.js
+│       └── index.html
+│       └──main.min.css
+|     
 ├── src
 │     ├── img
 |     |     └── logo-market-inventory-system.jpg
 │     ├── scripts
-│     │      └── config.mjs
-│     │      └── functions.mjs
-│     │      └── intemNames.mjs
-│     │      └── main.mjs
-│     │      └── validator.mjs
+│     │      └── config.js
+│     │      └── functions.js
+│     │      └── intemNames.js
+│     │      └── main.js
+│     │      └── validator.js
 |     ├── styles
 |     |       └── reset.css
 |     |       └── style.css
@@ -28,7 +32,6 @@ A project to manage the products of a supermarket inventory with a setting panel
 |
 ├── package.json
 ├── LICENSE
-├── package-lock.json
 ├── readme.md
 ├── webpack.config.js
 .
@@ -40,7 +43,18 @@ A project to manage the products of a supermarket inventory with a setting panel
 
 There are differnt ways to run the programm:
 
-1. Open the programm from [index.html](index.html) file you find in the folder (by double clicking on it). The programm could be also run with a local server (ex VSCode live server extension).
+1. Open the programm from [index.html](index.html) file you find in the folder [src](./src) (by double clicking on it).
+2. If u have Node.js you can open the file from your CLI by running these scripts: 
+
+``` JS
+  "scripts": {
+    "watch": "npx webpack --watch",
+    "start": "npx webpack-dev-server --open",
+    "build": "npx webpack"
+  },
+```
+
+In the project directory open terminal and digit "npm run build" to build the programm and "npm start" to run the program on a server
 
 ## Project Description
 
@@ -81,9 +95,9 @@ The program was designed to start with default values. We made this decision to 
 ### Item Structure
 
 - Every Item has:
-  - A _unique ID_ generated starting from 1 and incremented by 1 for each product with the function uniqueId() in the functions.mjs file.
-  - A _name_ picked randomly from an array of strings in itemsNames.mjs
-  - An _expiration date_ generated randomly between two dates in the function generateExpiry() in functions.mjs
+  - A _unique ID_ generated starting from 1 and incremented by 1 for each product with the function uniqueId() in the functions.js file.
+  - A _name_ picked randomly from an array of strings in itemsNames.js
+  - An _expiration date_ generated randomly between two dates in the function generateExpiry() in functions.js
   - A _state_ starting from 0 and incrmented every week the item stays on the shelf :
 
     - **New** - the item has arrived this week and is not expired
@@ -103,7 +117,7 @@ In this section you can find the documentation about the feature delivered in ac
 
 ### Feature 1: Expired Items are removed from the the list
   
-- This is implemented with the help of the function checkItem() and JavaScript's built in Array method [filter](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter). The functions are invoked in the main.mjs file on the line
+- This is implemented with the help of the function checkItem() and JavaScript's built in Array method [filter](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter). The functions are invoked in the main.js file on the line
 
     ```javascript
     items = items.filter(fn.checkItem);
@@ -115,11 +129,11 @@ In this section you can find the documentation about the feature delivered in ac
 
 ### Feature 3: Each week M new products arrive
 
-- Done by using the function generateItems() in the main.mjs file. The user can set the number of items to generate every week from the setting panel in the main page. Default value is set at 5. Maximum number of product per week is set at 20.
+- Done by using the function generateItems() in the main.js file. The user can set the number of items to generate every week from the setting panel in the main page. Default value is set at 5. Maximum number of product per week is set at 20.
 
 ### Feature 4: Each week view should have navigation buttons, 'next' and 'previous'
 
-- Buttons are generated from Javascript in function printContent() in functions.mjs, each weeks button refers to a specific week through an id that identifies a single week, the quantity of ids is setted by the number of weeks. The ids are generated in descending order.
+- Buttons are generated from Javascript in function printContent() in functions.js, each weeks button refers to a specific week through an id that identifies a single week, the quantity of ids is setted by the number of weeks. The ids are generated in descending order.
 
 1. ### They change the view to the next or previous week
 
@@ -142,7 +156,7 @@ The same event will check the section id, if the id is identic to the weeks runt
 
 ### Feature 5: Each item's status should have a unique visual style
 
-- Implemented with a switch instruction in functions.mjs in the createTable function that adds a class based on the value of the state, in CSS every class refers to a different background color property.
+- Implemented with a switch instruction in functions.js in the createTable function that adds a class based on the value of the state, in CSS every class refers to a different background color property.
 
 Quick example
 
@@ -198,18 +212,26 @@ b. the psste into inputs field
   
 Every input is targeted in Javascript by HTML id attribute. and stored in an array. Than the programm executes 2 forEach() on every input to disable the autocomplete and the paste, and for the type date inputs will executes a forEach that will allow the user to digit in the input | number | backspace | tab | arrows | and slash. For all other inputs executes a forEach that allows the digit | number | backspace | tab | arrows | and minus for negative numbers. You can check this process in the main.mjs file.
 
-Now, every input is checked via 2 functions:
-checkStartDate() and checkOtherInputs (validator.mjs).
+CheckStartDate() check that the inputs respect the parameter of the setting panel, for each input is setted a class "error-input" till the input is not correct.
+Will check the input via a regular expression,
 
-These functions check that the inputs respect the parameter of the setting panel, if not throught the "input" eve
+``` JS
+    let regexInputStartDate = new RegExp("(0[1-9]|1[0-2])/(0[1-9]|[1-3][0-9])/[1-9][0-9]{3}");
+```
 
-# DA FINIRE la parte del setting panel
+also check the maxlenght of the input setted at 10 character.
+If input matches all these parameters, is invoked the totalCheck() function that will check if every input has the class
+"valid-input" and if the input inserted is the last and all the inputs have the class of valid abilitate the button "save".
+
+For all other inputs the function checkOtherInputs will check that the numeric value is in a range of min and max value.
+
+Finally, the function totalCheck() check that all inputs have "valid-input" class, if so, abilitate the save button, else disable it.
 
 ## HTML & CSS Feature
 
 The Project, as required, has a complete HTML5 page and a CSS sylesheet. 
 
-_HTML_  of this page is really symple. Is composed by an header with the main title <h1> and our logo. (the logo is original and we own the copyright on it).
+_HTML_  of this page is really symple. Is composed by an heading with the main title <h1> and our logo. (the logo is original and we own the copyright on it).
 
 In the main section we have a form that cointains all our setting panel elements. Every input has a placeholder to help user in input compilation.
 
@@ -218,29 +240,27 @@ After this we have the section:
 ``` HTML
     <section id="content"></section>
 ```
-In this section will be generated from Jascript all the tables and the elements.
 
+In this section will be generated from Javascript all the tables and the elements.
 
 _CSS_ 
 
 For our style we decided to use a reset.css file because we wanted to have the control on every element. Read more about [reset.css](https://meyerweb.com/eric/tools/css/reset/)
 
-Our stylesheet is fully commented and separated logically for every element of the page. 
+Our stylesheet is fully commented and separated logically for every element of the page.
 
-We used the boorstraps media query sizes cause we analized them and we decided that were perfect for our purpose. 
+We used the boorstraps media query sizes cause we analized them and we decided that were perfect for our purpose.
 
-The only tecnhicality we'd like to underline is how we implemented the gear setting buttom, to clarify, the button that opens the setting panel. We use the: 
-
-``` CSS
-  animation: rotation 2s infinite linear;
-```
-
-to make the gear rotate 360
 ---
 
 ## Browser Compatibility
 
-sono tutti compatibili con l ultima versione 
+The project has been tested on every browser and it is compatible with these versions and also with older ones:
+
+- Microsoft Edge v.80
+- Firefox v.74
+- Chrome v.80
+- Safari v.13
 
 ## File Validation
 
@@ -269,6 +289,20 @@ All files have been validated:
 
 ## Authors
 
-- 
+- Cristiano Finotto
+- Paolo Gippa
+- Davide Murroni
+- Simone Sporeni
+
+## Changelog and version history
+
+To clone the project repository digit on your CLI:
+git clone https://github.com/CristianoFFinotto/js-project-05-market.git
+token key: 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
+
+For any issue, try:
+git clone https://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@github.com/CristianoFFinotto/js-project-05-market.git
+
+---
 
 [Back to top.](#Market)

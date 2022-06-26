@@ -1,17 +1,21 @@
+/**
+ * This is out webpack configuration file 
+ */
+
 const path = require('path');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 module.exports = {
     mode: 'production',
-    entry: './src/scripts/main.js',
+    entry: './src/scripts/main.js', 
     output: {
         path: path.resolve(__dirname, './public'),
         filename: 'bundle.min.js'
     },
 
     plugins: [
-      new CssMinimizerPlugin(),
+      new CssMinimizerPlugin(), 
       new MiniCssExtractPlugin({filename: 'main.min.css'}),
     ],
   
@@ -33,7 +37,7 @@ module.exports = {
                         presets: [[
                             '@babel/preset-env',
                             {
-                                targets: { edge: '80', firefox: '74', chrome: '80', safari: '13', ie: '11'},
+                                targets: { edge: '80', firefox: '74', chrome: '80', safari: '13'},
                                 useBuiltIns: 'usage',
                                 corejs: '3.22.8'
                             }
