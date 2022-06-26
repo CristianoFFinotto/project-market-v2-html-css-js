@@ -24,7 +24,7 @@ h1 {
 
 }
 
-h2.form-heading {
+.form-heading {
   width: 100vw;
   text-align: center;
   font-weight: 600;
@@ -135,8 +135,6 @@ button.setting-btn:active {
 
 label {
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
-  /*   margin-left: 3%;
-  margin-top: 3%; */
   font-size: 0.8em;
 }
 
@@ -185,11 +183,11 @@ thead {
   line-height: 40px;
 }
 
-th:nth-of-type(3) {
+td:nth-of-type(3) {
   width: 25%;
 }
 
-th {
+th, td {
   border: 2px solid black;
   width: 20%;
   height: 5vh;

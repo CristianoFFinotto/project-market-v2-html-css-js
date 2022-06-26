@@ -1,323 +1,267 @@
-# Expiry list javascript program
+# Market
 
-A command line program made in JavaScript used to output a weekly list of supermarket items filtered by their expiry date.
+A project to manage the products of a supermarket inventory with a setting panel to manage preferences. The program was entirely developed in Javascript, HTML and CSS.
 
----
+## Files Structure
 
--   [0-js-proj-01-expiry-list](#0-js-proj-01-expiry-list)
--   [Project Description](#project-description)
--   [Usage](#usage)
--   [Configuration and technical characteristics](#configuration-and-technical-characteristics)
--   [Files and project structure](#files-and-project-structure)
--   [Features delivered](#features-delivered)
--   [Bonuses delivered](#bonuses-delivered)
-    -   [Bonus 1](#bonus-1)
-    -   [Bonus 2](#bonus-2)
-    -   [Bonus 3](#bonus-3)
--   [Browser compatibility](#browser-compatibility)
--   [External resources](#external-resources)
--   [License and contact information](#license-and-contact-information)
--   [Authors](#authors)
-
----
-
-## Project Description
-
-This project is a javascript program that runs in the browser and prints a weekly list of filtered supermarket items in the console. The ways the items are filtered and printed are based on the following rules:
-
-1. expired items should be removed
-1. items that have been on the shelf for more than **N** weeks should be removed
-1. each week **M** new products arrive
-1. the program start from the current date plus **K** days and run for **X** weeks
-1. each weekly list should be printed after a duration of **R** seconds
-1. **N, M, K, X, R** are configurable by the supermarket manager
-
-Each product can assume different states based on its expiry date, and the number of weeks it's been on the shelf:
-
-1. **New** - the item has arrived this week and is not expired
-1. **Valid** - the item is not expired and has been on the shelf for LESS than N weeks
-1. **Old** - the item is not expired, but has been on the shelf for MORE than N weeks
-1. **Expired** - the item has expired (the date is older than the current week date)
+``` MD
+.
+├── dist
+|     ├── index.html
+│     └── main.budle.js
+├── img 
+|     └── logo-market-inventory-system.jpg
+├── src
+│     ├── img
+|     |     └── logo-market-inventory-system.jpg
+│     ├── scripts
+│     │      └── config.mjs
+│     │      └── functions.mjs
+│     │      └── intemNames.mjs
+│     │      └── main.mjs
+│     │      └── validator.mjs
+|     ├── styles
+|     |       └── reset.css
+|     |       └── style.css
+|     |  
+|     └── index.html
+|
+├── package.json
+├── LICENSE
+├── package-lock.json
+├── readme.md
+├── webpack.config.js
+.
+```
 
 ---
 
 ## Usage
 
-The program can be run in a number of different ways. It is intended to be run in the browser, but it can also be run in the terminal using nodejs with the following command:
+There are differnt ways to run the programm:
 
-```bash
-node main.mjs
-```
+1. Open the programm from [index.html](index.html) file you find in the folder (by double clicking on it). The programm could be also run with a local server (ex VSCode live server extension).
 
-This, of course, requires having node installed on your machine. If you don't have it installed, you can grab it [here](https://nodejs.org/it/).
+## Project Description
 
-To run it in the browser, since ES6 modules are subject to the _same-origin_ policy, the scripts need to be run on a server. To do this, we can simply use the [**Live Server**](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) extension if you use VS Code as your preferred text editor. Once you have the file open in the browser, simply open the console by right clicking anywhere on the page and selecting **Inspect**, or by using any keybinding you may have configured such as <code>F12</code> or <code>CTRL+SHIFT+I</code>.
+---
+_short excursus_
 
-The program should ouput something like the following example to the console:
-
-```
-Week of 01-JUN-2022 //CURRENT DATE
----------------------------------------------------------
-//ID //ITEM NAME      //EXP. DATE //STATE     //CHECKS
-001: -----Cheese----- 12-JUN-2022 ----New---- [0 checks]
-002: -----Cheese----- 09-JUN-2022 ----New---- [0 checks]
-003: -----Banana----- 16-JUN-2022 ----New---- [0 checks]
-004: ---Green-Beans-- 27-MAY-2022 --Expired-- [0 checks]
-005: ------Apple----- 29-MAY-2022 --Expired-- [0 checks]
-006: -----Banana----- 23-JUN-2022 ----New---- [0 checks]
-
-Filtered
---------
-001: -----Cheese----- 12-JUN-2022 ----New---- [0 checks]
-002: -----Cheese----- 09-JUN-2022 ----New---- [0 checks]
-003: -----Banana----- 16-JUN-2022 ----New---- [0 checks]
-006: -----Banana----- 23-JUN-2022 ----New---- [0 checks]
-```
+The program was designed to start with default values. We made this decision to help the user having a better experience instead of show him an empty white page. In the following steps you will be informed about every default value setted.
 
 ---
 
-## Configuration and technical characteristics
+### Requirements
 
-The program is written entirely in <code>JavaScript</code>, <code>HTML5</code> and <code>CSS3</code>.
+- expired items should be removed
+- items that have been on the shelf for more than **N** weeks should be removed
+- each week **M** new products arrive
+- the page should have a complete HTML structure and CSS styling
+- each week view should have navigation buttons, 'next' and 'previous'
+  - they change the view to the next or previous week
+  - navigation buttons should be hidden or disabled when not required
+- each item's status should have a unique visual style
 
-As stated in the project description, the supermarket manager (the user of the program) should be able to configure a certain set of rules (N, M, K, X, R). These rules are configurable in the <code>config.mjs</code> file. In addition to the rules that are indicated in the specs of the program, some additional rules have been added.
+### Settings
 
-```javascript
-export let config = {
-	daysInWeek: 6, //- the number of days in a week
-	startingOffset: 3, //- K - offset of days used at the beginning of the program
-	shelfLife: 2, //- N - number of weeks an item can be on the shelf before it is considered old
-	newItemsPerWeek: 5, //- M - number of new items added each week
-	weeksRuntime: 4, // - X - how many weeks the program will run for
-	intervalSeconds: 1, // - R - how many seconds a simulated weeks lasts for
-	zeroPaddedDigits: 3, // - the final length to reach after a number is 0 padded
-	paddingCharacter: "*", // - the character used to pad a string
-	paddedNameChars: 17, //- the final length to reach after the name of an item is padded
-	paddedStateChars: 11, // - the final lenght to reach after the state of an item is padded
-	minIntervalSec: 1, // - the lowest number of seconds an interval can assume
-	maxIntervalSec: 5, // - the highest number of seconds (excluded) an interval can assume
-	newColor: "PaleGreen", // - the color used to style the output if the state of an item is "New"
-	validColor: "LightSkyBlue", // - the color used to style the output if the state of an item is "Valid"
-	oldColor: "Moccasin", // - the color used to style the output if the state of an item is "Old"
-	expiredColor: "LightPink", // - the color used to style the output if the state of an item is "Expired"
-	fallbackColor: "LightSlateGrey", // - the color used to style the output if the item has no state
-	locale: "en", // - the locale used for the date: https://www.venea.net/web/culture_code
-	dayFormat: "2-digit", //- used to format the day ("2-digit", "numeric")
-	monthFormat: "short", //- used to format the month ("long" "narrow" "numeric" "short")
-	yearFormat: "numeric", //- used to format the year ("2-digit", "numeric")
-};
-```
+- the website should have a settings panel
+- the panel should be animated via CSS or Javascript
+- all your specific configuration options should be available in the settings panel
+- the settings panel should have a 'save' button
+- when the user saves the settings
+- the panel should close
+- the page information should be updated to reflect the changed settings
+- numeric inputs in the settings panel should only accept numbers
+- it should be possible to increment numbers from the input UI
+- date inputs should be checked for validity
+  - define acceptable date formats and check with regular expressions
+  - if a date is not valid an error message should be shown below the input
+  - alternatively the 'save' button can be disabled if any input is not valid
 
----
+### Item Structure
 
-## Files and project structure
+- Every Item has:
+  - A _unique ID_ generated starting from 1 and incremented by 1 for each product with the function uniqueId() in the functions.mjs file.
+  - A _name_ picked randomly from an array of strings in itemsNames.mjs
+  - An _expiration date_ generated randomly between two dates in the function generateExpiry() in functions.mjs
+  - A _state_ starting from 0 and incrmented every week the item stays on the shelf :
 
-```
-Files structure
-	scripts/
-        config.mjs
-        functions.mjs
-        itemNames.mjs
-        main.mjs
-	styles/
-		styles.css
-	index.html
-```
+    - **New** - the item has arrived this week and is not expired
+    - **Valid** - the item is not expired and has been on the shelf for LESS than N weeks
+    - **Old** - the item is not expired, but has been on the shelf for MORE than N weeks
+    - **Expired** - the item has expired (the date is older than the current week date)
 
-All of the files related to the logic of the program are inside the **scripts** folder.
-
-Instead of putting all of the logic in a single file, the program has been split into multiple files with different purposes:
-
--   <code>main.mjs</code> is the starting point of the program. It invokes all of the functions that the program needs to operate.
--   <code>functions.mjs</code> is where all of the functions used to generate items, manipulate and print them to the console are written
--   <code>itemNames.mjs</code> as the name implies, contains an array that lists all of the possible names a supermarket item can have
--   <code>config.mjs</code> contains the configuration object
-
-This has been achived using **modules**. You can refer to the official modules documentation at the following link: [https://v8.dev/features/modules#mjs](#https://v8.dev/features/modules#mjs).
-
-To include a script that functions as a module, we have to add <code>type="module"</code> to the script tag in the html, like so:
-
-```HTML
-<script type="module" src="./scripts/main.mjs"></script>
-```
-
-To import from another file we use the **import** statement:
-
-```JavaScript
-import { config as cnf } from "./config.mjs";
-import * as fn from "./functions.mjs";
-import { itemNames } from "./itemsNames.mjs";
-```
-
-Of course, to import something we must first **export** it.
-
-<code>./config.mjs</code>
-
-```JavaScript
-export let config = {...}
-```
-
-<code>./functions.mjs</code>
-
-```JavaScript
-export let function = (...params) => {...}
-```
-
-<code>./itemsNames.mjs</code>
-
-```JavaScript
-export let itemNames = [...]
-```
+  - A number of _checks_ starting from 0 and incrmented every week the item stays on the shelf
 
 ---
 
-## Features delivered
+## Feature delivered
 
--   ### Feature 1: Expired items are removed from the items list.
-    -   This is implemented with the help of the function checkItem() and JavaScript's built in Array method [filter](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter). The functions are invoked in the main.mjs file on the line
+In this section you can find the documentation about the feature delivered in accordance with the requirements and the project description.
+
+---
+
+### Feature 1: Expired Items are removed from the the list
+  
+- This is implemented with the help of the function checkItem() and JavaScript's built in Array method [filter](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter). The functions are invoked in the main.mjs file on the line
+
     ```javascript
     items = items.filter(fn.checkItem);
     ```
--   ### Feature 2: Items that have been on the shelf for more than N weeks are removed
 
-    -   Implemented the same way feature 1 is implemented, difference being that the user has to set the shelf life of the items in the config.mjs file.
+### Feature 2: Items that have been on the shelf for more than N weeks are removed
 
--   ### Feature 3: Each week M new products arrive
+- Implemented the same way feature 1 is, the shelflife of the products is setted at 3 weeks, after that the product will have a state of "old".
 
-    -   Done by using the function generateItems() in the main.mjs file. In the config.mjs file the user can set how many randomly generated items per week they wish to have.
+### Feature 3: Each week M new products arrive
 
--   ### Feature 4: The program starts from the current date plus startingOffset days and runs for weeksRuntime weeks
+- Done by using the function generateItems() in the main.mjs file. The user can set the number of items to generate every week from the setting panel in the main page. Default value is set at 5. Maximum number of product per week is set at 20.
 
-    -   To clarify: The runtime of the program in real time seconds is determined by the second parameter of the setInterval() function in the main.mjs, multiplied by the value of weeksRuntime property of the config object in config.mjs. All of the properties of the config object that mention the word "day(s)","week(s)" are simply what helps us simulate the passage of days and weeks in the program, also with the aid of Date objects. This particular feature is implemented with the following lines of code in the main.mjs file.
+### Feature 4: Each week view should have navigation buttons, 'next' and 'previous'
 
-    ```javascript
-    let startDate = new Date();
-    let currentDate = fn.addDays(startDate, cnf.startingOffset);
-    ```
+- Buttons are generated from Javascript in function printContent() in functions.mjs, each weeks button refers to a specific week through an id that identifies a single week, the quantity of ids is setted by the number of weeks. The ids are generated in descending order.
 
-    and
+1. ### They change the view to the next or previous week
 
-    ```javascript
-    let runtime = cnf.weeksRuntime;
-    ...
-    runtime--;
-    if (runtime <= 0) {
-    	clearInterval(id);
-    }
-    ```
+- Clicking on button starts a javascript event that add a class d-none that in CSS will accomplish the propriety <code>display:none</code> removing the current section view; after it will remove the next/previuos (based on the pressed button) section the same class to show elements.
 
-    As you can see, the function addDays() is used as well, and it can be found in the functions.mjs file.
+``` Js
 
--   ### Feature 5: Each weekly list is printed after a certain number seconds
+  buttonNext.onclick = function() {
+  let nextSection = document.getElementById(sectionId - 1);
 
-    -   To understand better how this is implemented check out the feature 4, and also the [Bonus 1](#bonus-1) section. The fundamental pieces of the main.mjs are:
+  sectionContent.classList.add("d-none");
+  nextSection.classList.remove("d-none")
+ }
 
-    ```javascript
-    let interval = Math.floor(Math.random() * (cnf.maxIntervalSec - cnf.minIntervalSec + 1) + cnf.minIntervalSec);
-    ...
-    let id = setInterval(() => {
-    	...
-    	fn.printItems(items, cnf);
-    	...
-    }, interval * 1000);
-    ```
+```
 
-    This requires a good understanding of the JavaScript built in method [setInterval()](https://developer.mozilla.org/en-US/docs/Web/API/setInterval) and our function printItems() found in the functions.mjs file.
+2. ### Navigation buttons should be hidden or disabled when not required
 
--   ### Feature 6: N,M,K,X,R should be configurable by the supermarket manager and should have meaningful variable names
+The same event will check the section id, if the id is identic to the weeks runtime the previous button will be hidden adding a class "v-hidden" that in CSS will accomplish a <code>visibility: hidden</code> propriety. Same for the next button, the class will be add when the section id will be identical to 1.
 
-    -   As indicated in the [configuration](#configuration-and-technical-characteristics) section of this file, the configurable parameters have been suitably renamed for ease of use and have been added to a config object that gets then imported in the <code>main.mjs</code> file.
+### Feature 5: Each item's status should have a unique visual style
 
-    ```javascript
-    import { config as cnf } from "./config.mjs";
-    ```
+- Implemented with a switch instruction in functions.mjs in the createTable function that adds a class based on the value of the state, in CSS every class refers to a different background color property.
 
-    These configuration parameters can then be called with the <code>cnf.</code> prefix.
+Quick example
 
+```js
+  switch(item.state) {
+   case "New":
+    tableRowItem.classList.add("green");
+     break;
+    case "Valid":
+     tableRowItem.classList.add("yellow");
+     break;
+```
+
+### Setting Panel Features
+
+In this project a setting panel was required.
+We implemented the creation using an HTML form.
+
+N.B: We used a form even if we don't need to send any data to a back-end, the reason of our choice is the flexibility, meaning that if in the future a back-end will be required the code doesn' t need to be written from scratch. ?????
+
+1. ### Panel UX/UI
+
+- The UI of the panel is minimalistic.
+- For the usage the user just need to click on the setting gear icon on the bottom of the page. When the panel is open, if the user doesn' t want to use it can close it clicking on the "X".
+- Each input has a placeholder inserted from placeholder HTML attribute to help user not to insert wrong inputs.
+- If inputs are not correct the input field will color of red.
+- The save button is disabled if inputs are empty or not correct.
+
+We picked these decision with the aim of ensuring the best UX.
+Keep reading for more detailed information...
+
+2. ### Panel UX/UI technicalities
+
+The setting panel will open and close when the user interacts with it.This has been implement via Javascript and CSS,
+by setting a <code>display: none</code> to the panel HTML element container, so when the user click on the setting gear starts a Javascript event that modify the class of the container, substituting the <code>display:none</code> with a <code>display: flex</code> rule.
+The mechanism to close the panel is the same but backwards. User also can close the panel clicking on the save button. After compiling all the inputs correctly.
+You can check this feature in the onpeCloseMenu() function in functions.mjs file.
+
+
+ ### Panel Validation
+
+- To grant a correct execution of the programm, we did the input validation with Javascript using functions that checks every input by:
+a.  the character inserted (es. only number)
+b.  the min & max number of character accepted  
+
+We also disabled:
+
+a. the inputs autocomplete
+
+b. the psste into inputs field
+
+1. ### Panel Validation Technicalities
+  
+Every input is targeted in Javascript by HTML id attribute. and stored in an array. Than the programm executes 2 forEach() on every input to disable the autocomplete and the paste, and for the type date inputs will executes a forEach that will allow the user to digit in the input | number | backspace | tab | arrows | and slash. For all other inputs executes a forEach that allows the digit | number | backspace | tab | arrows | and minus for negative numbers. You can check this process in the main.mjs file.
+
+Now, every input is checked via 2 functions:
+checkStartDate() and checkOtherInputs (validator.mjs).
+
+These functions check that the inputs respect the parameter of the setting panel, if not throught the "input" eve
+
+# DA FINIRE la parte del setting panel
+
+## HTML & CSS Feature
+
+The Project, as required, has a complete HTML5 page and a CSS sylesheet. 
+
+_HTML_  of this page is really symple. Is composed by an header with the main title <h1> and our logo. (the logo is original and we own the copyright on it).
+
+In the main section we have a form that cointains all our setting panel elements. Every input has a placeholder to help user in input compilation.
+
+After this we have the section:
+
+``` HTML
+    <section id="content"></section>
+```
+In this section will be generated from Jascript all the tables and the elements.
+
+
+_CSS_ 
+
+For our style we decided to use a reset.css file because we wanted to have the control on every element. Read more about [reset.css](https://meyerweb.com/eric/tools/css/reset/)
+
+Our stylesheet is fully commented and separated logically for every element of the page. 
+
+We used the boorstraps media query sizes cause we analized them and we decided that were perfect for our purpose. 
+
+The only tecnhicality we'd like to underline is how we implemented the gear setting buttom, to clarify, the button that opens the setting panel. We use the: 
+
+``` CSS
+  animation: rotation 2s infinite linear;
+```
+
+to make the gear rotate 360
 ---
 
-## Bonuses delivered
+## Browser Compatibility
 
-### Bonus 1
+sono tutti compatibili con l ultima versione 
 
--   make the duration R a random number between MIN and MAX
--   MIN and MAX should be configurable settings in the config object
+## File Validation
 
-This has been achieved by adding two configuration parameters in the config object (**minIntervalSec** and **maxIntervalSec**) and using the following formula:
+All files have been validated:
 
-```
-floor(random_number * (max - min + 1) + min)
-```
-
-where random_number is between 0 and 1, with 1 excluded.
-
-This allows us to generate a number between min and max, extremes both included (thanks to the added +1), as opposed to the standard behavior when generating a random number which would result in a random number between 1 and max, with max excluded.
-
-To better understand this behavior, you can read a more thourough explaination [here](https://stackoverflow.com/questions/1527803/generating-random-whole-numbers-in-javascript-in-a-specific-range).
-
-### Bonus 2
-
--   use colors in the console log output
-
-To add colors to a console log output, we simply define a string variable that contains any css rules we may want to apply, like so:
-
-```javascript
-let style = "color: white;";
-```
-
-To then apply this style, we simply concatenate <code>%c</code> before the string we want to style, and then pass the style as an argument to the console log
-
-```javascript
-console.log(%c + text, style);
-```
-
-### Bonus 3
-
--   accept a user defined date format in the config object
--   format the dates accordingly
--   don't use moment.js
-
-To let the user define the way the date is formatted, we added four new configuration parameters to the config object:
-
-1. locale
-1. dayFormat
-1. monthFormat
-1. yearFormat
-
-as described [here](#configuration-and-technical-characteristics). To apply these parameters, we pass them as an argument whenever the <code>formatDate()</code> function is invoked.
-
----
-
-## Browser compatibility
-
--   Chrome v100.0.4896.60: tested and fully compatible
--   FireFox v98.0.2: tested and fully compatible
--   Edge v99.0.1150.55: tested and fully compatible
--   Safari 2.1.13: tested and fully compatible
--   Opera : not tested
--   InternetExplorer v11 and back - not functional
-
----
-
-## External resources
-
-[https://developer.mozilla.org/en-US/](https://developer.mozilla.org/en-US/)
-
-[https://www.w3schools.com/](https://www.w3schools.com/)
-
-[https://www.venea.net/web/culture_code](https://www.venea.net/web/culture_code)
+- HTML files [HTML Validator](https://validator.w3.org/)
+- CSS files [CSS Validator](https://jigsaw.w3.org/css-validator/)
+- Javascript files [Javascript validator](https://beautifytools.com/javascript-validator.php)
+- Json files [Json Validator](https://jsonmatter.curiousconcept.com/)
 
 ---
 
 ## License and contact information
 
-[nemanja.gajicic@edu.itspiemonte.it](nemanja.gajicic@edu.itspiemonte.it)
+[cristiano.finotto@edu.itspiemonte.it](cristiano.finotto@edu.itspiemonte.it)
 
-[pietro.milanese@edu.itspiemonte.it](pietro.milanese@edu.itspiemonte.it)
-
-[jacopo.trompeo@edu.itspiemonte.it](jacopo.trompeo@edu.itspiemonte.it)
+[paolo.gippa@edu.itspiemonte.it](paolo.gippa@edu.itspiemonte.it)
 
 [davide.murroni@edu.itspiemonte.it](davide.murroni@edu.itspiemonte.it)
+
+[simone.sporeni@edu.itspiemonte.it](simone.sporeni@edu.itspiemonte.it)
 
 [License](/LICENSE)
 
@@ -325,8 +269,6 @@ as described [here](#configuration-and-technical-characteristics). To apply thes
 
 ## Authors
 
-Nemanja Gajicic, Pietro Milanese, Jacopo Trompeo, Davide Murroni
+- 
 
----
-
-[Back to top.](#expiry-list-javascript-program)
+[Back to top.](#Market)

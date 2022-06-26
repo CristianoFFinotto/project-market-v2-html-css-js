@@ -154,23 +154,23 @@ function createTable(itemArray, node) {
 	itemArray.forEach(item => {
 		let tableRowItem = document.createElement('tr');
 
-		let thIdElement = document.createElement('th');
+		let thIdElement = document.createElement('td');
 		thIdElement.textContent = item.id;
 		tableRowItem.appendChild(thIdElement);
 
-		let thNameElement = document.createElement('th');
+		let thNameElement = document.createElement('td');
 		thNameElement.textContent = item.name;
 		tableRowItem.appendChild(thNameElement);
 
-		let thExpiryEement = document.createElement('th');
+		let thExpiryEement = document.createElement('td');
 		thExpiryEement.textContent = item.expiry.toLocaleDateString();
 		tableRowItem.appendChild(thExpiryEement);
 
-		let thChecksEement = document.createElement('th');
+		let thChecksEement = document.createElement('td');
 		thChecksEement.textContent = item.checks;
 		tableRowItem.appendChild(thChecksEement);
 
-		let thStateEement = document.createElement('th');
+		let thStateEement = document.createElement('td');
 		thStateEement.textContent = item.state;
 		tableRowItem.appendChild(thStateEement);
 

@@ -13,6 +13,7 @@
  * @property {number} shelfLife - N - number of weeks an item can be on the shelf before it is considered old
  * @property {number} newItemsPerWeek - M - numbr of new items added each week
  * @property {number} weeksRuntime - X - how many weeks the program will run for
+ * 
  */
 
 export let config = {
