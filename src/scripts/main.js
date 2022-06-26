@@ -158,16 +158,6 @@ function init() {
 		 });
 		 };
 	 };
-
-	 let orderedItems = [];
-		let sortTable = (emptyArray, itemArray) => {
-		
-		itemArray.forEach(item => { 
-			emptyArray.push(item.name);
-		});
-		emptyArray.sort();
-		console.log(emptyArray);
-	}
  
  init();
 

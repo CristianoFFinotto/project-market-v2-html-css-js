@@ -9,7 +9,7 @@
  * - print the items to the console
  * - manipulate certain useful variables (increment a date, pad a string, pad a number)
  */
-
+ /* Config importt */
  import { config as cnf } from './config.js';
 
 /**
@@ -115,12 +115,34 @@ export function updateChecks(item) {
 }
 
 /**
- * Function create DOM table
- * @param {*} itemArray - array of product
- * @param {*} node - DOM node where append table
+ * Checks if an item has a state of either 'New' or 'Valid'
+ * @param {object} item - the item object to check
+ * @returns {boolean} true if item.state is 'New' or 'Valid', false otherwise
  */
 
-function createTable(itemArray, node) {
+export function checkItem (item) {
+	return item.state === 'New' || item.state === 'Valid';
+}
+
+/**
+ * Adds any amount of days to a date object and returns the result
+ * @param {Date} - the date object to increment
+ * @param {number} - the number of days to increment the date by
+ * @returns {Date} the date after the days have been added
+ */
+
+export function addDays(date, days){
+	let result = new Date(date);
+	result.setDate(result.getDate() + days);
+	return result;
+}
+/**
+ * Function create DOM table
+ * @param {Array} itemArray - array of product.
+ * @param {Node} node - DOM node where append table.
+ */
+
+ function createTable(itemArray, node) {
 
 	/* create table with items */
 	let table = document.createElement('table');
@@ -154,23 +176,23 @@ function createTable(itemArray, node) {
 	itemArray.forEach(item => {
 		let tableRowItem = document.createElement('tr');
 
-		let thIdElement = document.createElement('th');
+		let thIdElement = document.createElement('td');
 		thIdElement.textContent = item.id;
 		tableRowItem.appendChild(thIdElement);
 
-		let thNameElement = document.createElement('th');
+		let thNameElement = document.createElement('td');
 		thNameElement.textContent = item.name;
 		tableRowItem.appendChild(thNameElement);
 
-		let thExpiryEement = document.createElement('th');
+		let thExpiryEement = document.createElement('td');
 		thExpiryEement.textContent = item.expiry.toLocaleDateString();
 		tableRowItem.appendChild(thExpiryEement);
 
-		let thChecksEement = document.createElement('th');
+		let thChecksEement = document.createElement('td');
 		thChecksEement.textContent = item.checks;
 		tableRowItem.appendChild(thChecksEement);
 
-		let thStateEement = document.createElement('th');
+		let thStateEement = document.createElement('td');
 		thStateEement.textContent = item.state;
 		tableRowItem.appendChild(thStateEement);
 
@@ -196,36 +218,12 @@ function createTable(itemArray, node) {
 	table.appendChild(tbody);
 	node.appendChild(table);
 }
-
-/**
- * Checks if an item has a state of either 'New' or 'Valid'
- * @param {object} item - the item object to check
- * @returns {boolean} true if item.state is 'New' or 'Valid', false otherwise
- */
-
-export function checkItem (item) {
-	return item.state === 'New' || item.state === 'Valid';
-}
-
-/**
- * Adds any amount of days to a date object and returns the result
- * @param {Date} - the date object to increment
- * @param {number} - the number of days to increment the date by
- * @returns {Date} the date after the days have been added
- */
-
-export function addDays(date, days){
-	let result = new Date(date);
-	result.setDate(result.getDate() + days);
-	return result;
-}
-
 /**
  * Function print content into table
- * @param {*} itemArray - array of product
- * @param {*} currentDate - actual date
- * @param {*} sectionId 
- * @param {*} nodeContent 
+ * @param {Array} itemArray - Array of product.
+ * @param {Date} currentDate - Actual date.
+ * @param {Number} sectionId - The number for the section id. 
+ * @param {Node} nodeContent - The node to print the content.
  */
 
 export function printContent(itemArray, currentDate, sectionId, nodeContent) {
